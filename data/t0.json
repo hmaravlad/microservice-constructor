@@ -1,0 +1,14 @@
+{
+  "name": "test",
+  "ci": {
+    "provider": "github-actions",
+    "deployTarget": "digital-ocean"
+  },
+  "services": [
+    {
+      "name": "users",
+      "type": "default",
+      "lang": "nodejs/express"
+    }
+  ]
+}
