@@ -1,4 +1,4 @@
-import { ServiceConfig } from "./service-config";
+import { ServiceConfig } from './service-config';
 
 export interface ProjectConfig {
   name: string;
