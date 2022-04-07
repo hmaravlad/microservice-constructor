@@ -11,6 +11,7 @@ export class MainTsTemplate implements FileTemplate<ServiceConfig> {
         import { ValidationPipe } from '@nestjs/common';
         import { NestFactory } from '@nestjs/core';
         import { AppModule } from './app.module';
+        ${config.docs ? "import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';" : ''}
 
         async function bootstrap() {
           const app = await NestFactory.create(AppModule);
@@ -21,6 +22,17 @@ export class MainTsTemplate implements FileTemplate<ServiceConfig> {
               transform: true,
             }),
           );
+
+          ${config.docs ? `
+          const config = new DocumentBuilder()
+            .setTitle(${config.name})
+            .setDescription('${config.name} service API description')
+            .setVersion('1.0')
+            .build();
+          const document = SwaggerModule.createDocument(app, config);
+          SwaggerModule.setup('api', app, document);
+          ` : ''}
+
           await app.listen(${config.port});
         }
         bootstrap();      

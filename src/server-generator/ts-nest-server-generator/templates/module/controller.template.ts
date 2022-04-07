@@ -28,6 +28,7 @@ export class ControllerTemplate implements FileTemplate<EndpointGroup> {
     const endpoints = endpointGroup.endpoints.map(endpoint => this.generateEndpoint(endpoint, endpointGroup, imports));
 
     const dto = removeExtraWhiteSpace(`
+      ${this.serviceConfig.docs ? `@ApiTags('${endpointGroup.name}')` : ''}
       @Controller('${endpointGroup.prefix}')
       export class ${Capitalize(endpointGroup.name)}Controller {
         ${addIndentation(endpoints.join('\n\n'), '\t\t\t\t', true)}
@@ -35,7 +36,9 @@ export class ControllerTemplate implements FileTemplate<EndpointGroup> {
 
     const nestJsImports = this.generateNestjsImports(endpointGroup);
 
-    return nestJsImports + '\n' + getDistinct(imports).map(name => `import { ${name} } from './dto/${Decapitalize(name)}.dto';`).join('\n') + '\n' + dto;
+    const swaggerImports = this.serviceConfig.docs ? "import { ApiTags, ApiResponse } from '@nestjs/swagger';\n" : '';
+
+    return nestJsImports + '\n' + swaggerImports + getDistinct(imports).map(name => `import { ${name} } from './dto/${Decapitalize(name)}.dto';`).join('\n') + '\n' + dto;
   }
 
   private generateEndpoint(endpoint: Endpoint, endpointGroup: EndpointGroup, imports: string[]): string {
@@ -50,6 +53,12 @@ export class ControllerTemplate implements FileTemplate<EndpointGroup> {
     return removeEmptyLines(removeExtraWhiteSpace(`
       @${Capitalize(endpoint.method)}('${endpoint.path}') 
       ${statusCode ? '\n\t\t\t' + statusCodeStr : ''}
+      ${this.serviceConfig.docs && (statusCode || responseType) ? `
+      @ApiResponse({ 
+        ${statusCode ? `status: ${statusCode}` : ''}, 
+        ${responseType ? `type: ${responseType}` : ''}
+      })
+      ` : ''}
       ${endpoint.name}(${params.join(', ')}): ${responseType || 'void'} {
         // TODO: add business logic
       }`));

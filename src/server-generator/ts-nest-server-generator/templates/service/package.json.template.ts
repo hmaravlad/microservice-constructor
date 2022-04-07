@@ -1,3 +1,4 @@
+import { removeEmptyLines } from '../../../../utils/remove-empty-lines';
 import { File } from '../../../../types/file';
 import { FileTemplate } from '../../../../types/file-template';
 import { ServiceConfig } from '../../../../types/service-config';
@@ -7,7 +8,7 @@ export class PackageJsonTemplate implements FileTemplate<ServiceConfig> {
     return { 
       name: 'package.json',
       path: `${config.name}`,
-      data: `
+      data: removeEmptyLines(`
       {
         "name": "${config.name}",
         "version": "0.0.1",
@@ -34,13 +35,15 @@ export class PackageJsonTemplate implements FileTemplate<ServiceConfig> {
           "@nestjs/core": "^8.0.0",
           "@nestjs/mapped-types": "^1.0.0",
           "@nestjs/platform-express": "^8.0.0",
+          ${config.docs ? '"@nestjs/swagger": "^5.2.1",' : ''}
           "class-transformer": "^0.4.0",
           "class-validator": "^0.13.1",
           "knex": "^0.95.9",
           "nestjs-knex": "^2.0.0",
           "reflect-metadata": "^0.1.13",
           "rimraf": "^3.0.2",
-          "rxjs": "^7.2.0"
+          "rxjs": "^7.2.0"${config.docs ? ',' : ''}
+          ${config.docs ? '"swagger-ui-express": "^4.3.0"' : ''}
         },
         "devDependencies": {
           "@nestjs/cli": "^8.0.0",
@@ -83,7 +86,7 @@ export class PackageJsonTemplate implements FileTemplate<ServiceConfig> {
           "testEnvironment": "node"
         }
       }           
-    `,
+    `),
     };
   }
 }

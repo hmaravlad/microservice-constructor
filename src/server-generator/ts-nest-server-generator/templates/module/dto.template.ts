@@ -6,6 +6,7 @@ import { getTypeName } from '../../get-type-name';
 import { addIndentation } from '../../../../utils/add-indentation';
 import { Capitalize, Decapitalize } from '../../../../utils/case-utils';
 import { getDistinct } from '../../../../utils/distinct';
+import { removeEmptyLines } from '../../../../utils/remove-empty-lines';
 
 export class DtoTemplate implements FileTemplate<Entity> {
   constructor(
@@ -27,15 +28,25 @@ export class DtoTemplate implements FileTemplate<Entity> {
     const fields = entity.fields.map(field => this.generateField(field, imports));
 
     const dto = removeExtraWhiteSpace(`
+      ${this.serviceConfig.docs ? "import { ApiProperty } from '@nestjs/swagger';" : ''}
+
       export class ${Capitalize(entity.name)} {
         ${addIndentation(fields.join('\n\n'), '\t\t\t\t', true)}
       }`);
 
-    return getDistinct(imports).map(name => `import { ${name} } from './${Decapitalize(name)}.dto';`).join('\n') + '\n' + dto;
+    return getDistinct(imports).map(name => `import { ${name} } from './${Decapitalize(name)}.dto';`).join('\n') + dto;
   }
 
   private generateField(field: Field, imports: string[]): string {
-    return `${field.name}: ${getTypeName(field as Value, this.endpointGroup, imports)};`;
+    const typeName = getTypeName(field as Value, this.endpointGroup, imports);
+    return removeEmptyLines(removeExtraWhiteSpace(`
+      ${this.serviceConfig.docs ? `@ApiProperty(${this.isArray(typeName) ? '{ isArray: true }' : ''})` : ''}
+      ${field.name}: ${typeName};
+    `));
+  }
+
+  private isArray(typeName: string): boolean {
+    const len = typeName.length;
+    return typeName[len - 2] === '[' && typeName[len - 1] === ']'; 
   }
 }
-

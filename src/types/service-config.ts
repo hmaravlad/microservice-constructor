@@ -3,6 +3,7 @@ export interface ServiceConfig {
   type: string;
   lang: string;
   port: number;
+  docs: boolean;
   api?: APIConfig;
 }
 
