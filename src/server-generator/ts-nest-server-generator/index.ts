@@ -1,20 +1,21 @@
-import { File } from 'src/types/file';
-import { ServiceFileTemplate } from 'src/types/file-template';
-import { ServiceFilesGenerator } from 'src/types/files-generator';
-import { ServiceConfig } from 'src/types/service-config';
-import { AppControllerTsTemplate } from './templates/app.controller.template';
-import { AppModuleTsTemplate } from './templates/app.module.template';
-import { DockerfileTemplate } from './templates/docker-file.template';
-import { DockerignoreTemplate } from './templates/dockerignore.template';
-import { EslintrcTemplate } from './templates/eslintrc.template';
-import { MainTsTemplate } from './templates/main.template';
-import { PackageJsonTemplate } from './templates/package.json.template';
-import { PrettierrcTemplate } from './templates/prettierrc.template';
-import { TsconfigBuildJsonTemplate } from './templates/tsconfig.build.template';
-import { TsconfigJsonTemplate } from './templates/tsconfig.template';
+import { File } from '../../types/file';
+import { FileTemplate } from '../../types/file-template';
+import { FilesGenerator } from '../../types/files-generator';
+import { ServiceConfig } from '../../types/service-config';
+import ModuleGenerator from './module-generator';
+import { AppControllerTsTemplate } from './templates/service/app.controller.template';
+import { AppModuleTsTemplate } from './templates/service/app.module.template';
+import { DockerfileTemplate } from './templates/service/docker-file.template';
+import { DockerignoreTemplate } from './templates/service/dockerignore.template';
+import { EslintrcTemplate } from './templates/service/eslintrc.template';
+import { MainTsTemplate } from './templates/service/main.template';
+import { PackageJsonTemplate } from './templates/service/package.json.template';
+import { PrettierrcTemplate } from './templates/service/prettierrc.template';
+import { TsconfigBuildJsonTemplate } from './templates/service/tsconfig.build.template';
+import { TsconfigJsonTemplate } from './templates/service/tsconfig.template';
 
-export default class TsNestServerGenerator implements ServiceFilesGenerator {
-  templates: ServiceFileTemplate[] = [
+export default class TsNestServerGenerator implements FilesGenerator<ServiceConfig> {
+  templates: FileTemplate<ServiceConfig>[] = [
     new AppControllerTsTemplate(),
     new AppModuleTsTemplate(),
     new DockerfileTemplate(),
@@ -25,12 +26,19 @@ export default class TsNestServerGenerator implements ServiceFilesGenerator {
     new PrettierrcTemplate(),
     new TsconfigJsonTemplate(),
     new TsconfigBuildJsonTemplate(),
-  ]; 
+  ];
 
   generateFiles(config: ServiceConfig): File[] {
     const files: File[] = [];
     for (const template of this.templates) {
       files.push(template.getFile(config));
+    }
+    const moduleGenerator = new ModuleGenerator(config);
+    const apiConfig = config.api;
+    if (apiConfig) {
+      for (const endpointGroup of apiConfig.endpointGroups) {
+        files.push(...moduleGenerator.generateFiles(endpointGroup));
+      }
     }
     return files;
   }
