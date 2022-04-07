@@ -1,12 +1,13 @@
 import { File } from './types/file';
 import * as fs from 'fs/promises';
 import { existsSync } from 'fs';
+import { removeExtraWhiteSpace } from './utils/remove-extra-white-space';
 
 export class FileWriter {
   constructor(private target: string) {}
 
   async writeFile(file: File): Promise<void> {
-    file = this.removeExtraWhiteSpace(file);
+    file = { ...file, data: removeExtraWhiteSpace(file.data) };
     const path = __dirname + '/' + this.target + '/' + file.path;
     if (!existsSync(path)) {
       await fs.mkdir(path, { recursive: true });
@@ -18,22 +19,5 @@ export class FileWriter {
     for (const file of files) {
       await this.writeFile(file);
     }
-  }
-
-  removeExtraWhiteSpace(file: File): File {
-    let minNumber = Number.MAX_SAFE_INTEGER;
-    const rows = file.data.split('\n');
-    for (const row of rows) {
-      for (let i = 0; i < row.length; i++) {
-        if (!row[i].match(/\s/)) {
-          minNumber = Math.min(minNumber, i);
-          break;
-        }
-      }
-    }
-    return {
-      ...file,
-      data: rows.map(row => row.slice(minNumber)).join('\n'),
-    };
   }
 }
