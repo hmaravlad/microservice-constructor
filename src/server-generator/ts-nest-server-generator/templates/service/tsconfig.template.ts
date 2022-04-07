@@ -1,8 +1,8 @@
 import { File } from 'src/types/file';
-import { ServiceFileTemplate } from 'src/types/file-template';
-import { ServiceConfig } from 'src/types/service-config';
+import { FileTemplate } from '../../../../types/file-template';
+import { ServiceConfig } from '../../../../types/service-config';
 
-export class TsconfigJsonTemplate implements ServiceFileTemplate {
+export class TsconfigJsonTemplate implements FileTemplate<ServiceConfig> {
   getFile(config: ServiceConfig): File {
     return { 
       name: 'tsconfig.json',

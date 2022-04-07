@@ -1,8 +1,8 @@
-import { File } from 'src/types/file';
-import { ServiceFileTemplate } from 'src/types/file-template';
-import { ServiceConfig } from 'src/types/service-config';
+import { File } from '../../../../types/file';
+import { FileTemplate } from '../../../../types/file-template';
+import { ServiceConfig } from '../../../../types/service-config';
 
-export class PackageJsonTemplate implements ServiceFileTemplate {
+export class PackageJsonTemplate implements FileTemplate<ServiceConfig> {
   getFile(config: ServiceConfig): File {
     return { 
       name: 'package.json',

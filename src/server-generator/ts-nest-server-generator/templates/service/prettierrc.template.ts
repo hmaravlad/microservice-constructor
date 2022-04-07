@@ -1,11 +1,11 @@
-import { File } from 'src/types/file';
-import { ServiceFileTemplate } from 'src/types/file-template';
-import { ServiceConfig } from 'src/types/service-config';
+import { File } from '../../../../types/file';
+import { FileTemplate } from '../../../../types/file-template';
+import { ServiceConfig } from '../../../../types/service-config';
 
-export class EslintrcTemplate implements ServiceFileTemplate {
+export class PrettierrcTemplate implements FileTemplate<ServiceConfig> {
   getFile(config: ServiceConfig): File {
     return { 
-      name: '.eslintrc.js',
+      name: '.prettierrc.js',
       path: `${config.name}`,
       data: `
         {
@@ -16,8 +16,7 @@ export class EslintrcTemplate implements ServiceFileTemplate {
           "extends": [
               "eslint:recommended",
               "plugin:@typescript-eslint/recommended",
-              "airbnb-typescript/base",
-              "plugin:prettier/recommended"
+              "airbnb-typescript/base"
           ],
           "parser": "@typescript-eslint/parser",
           "parserOptions": {

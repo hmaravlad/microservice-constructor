@@ -1,8 +1,8 @@
-import { File } from 'src/types/file';
-import { ServiceFileTemplate } from 'src/types/file-template';
-import { ServiceConfig } from 'src/types/service-config';
+import { File } from '../../../../types/file';
+import { FileTemplate } from '../../../../types/file-template';
+import { ServiceConfig } from '../../../../types/service-config';
 
-export class AppControllerTsTemplate implements ServiceFileTemplate {
+export class AppControllerTsTemplate implements FileTemplate<ServiceConfig> {
   getFile(config: ServiceConfig): File {
     return { 
       name: 'app.controller.ts',
