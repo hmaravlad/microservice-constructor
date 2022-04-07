@@ -7,6 +7,7 @@ import { getParams } from '../../path-parsing';
 import { addIndentation } from '../../../../utils/add-indentation';
 import { Capitalize, Decapitalize } from '../../../../utils/case-utils';
 import { getDistinct } from '../../../../utils/distinct';
+import { removeEmptyLines } from '../../../../utils/remove-empty-lines';
 
 export class ControllerTemplate implements FileTemplate<EndpointGroup> {
   constructor(
@@ -29,7 +30,7 @@ export class ControllerTemplate implements FileTemplate<EndpointGroup> {
     const dto = removeExtraWhiteSpace(`
       @Controller('${endpointGroup.prefix}')
       export class ${Capitalize(endpointGroup.name)}Controller {
-        ${addIndentation(endpoints.join('\n'), '\t\t\t\t', true)}
+        ${addIndentation(endpoints.join('\n\n'), '\t\t\t\t', true)}
       }`);
 
     const nestJsImports = this.generateNestjsImports(endpointGroup);
@@ -46,11 +47,12 @@ export class ControllerTemplate implements FileTemplate<EndpointGroup> {
     const statusCode = endpoint.response?.statusCode;
     const statusCodeStr = `@HttpCode(${statusCode})`;
 
-    return removeExtraWhiteSpace(`
-      @${Capitalize(endpoint.method)}('${endpoint.path}') ${statusCode ? '\n\t\t\t' + statusCodeStr : ''}
+    return removeEmptyLines(removeExtraWhiteSpace(`
+      @${Capitalize(endpoint.method)}('${endpoint.path}') 
+      ${statusCode ? '\n\t\t\t' + statusCodeStr : ''}
       ${endpoint.name}(${params.join(', ')}): ${responseType || 'void'} {
         // TODO: add business logic
-      }`);
+      }`));
   }
 
   private getExchangeContentType(value: Value | undefined, endpointGroup: EndpointGroup, imports: string[]): string | undefined {
