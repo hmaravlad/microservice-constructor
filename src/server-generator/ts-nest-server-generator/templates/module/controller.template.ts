@@ -43,9 +43,11 @@ export class ControllerTemplate implements FileTemplate<EndpointGroup> {
     const body = bodyType ? `@Body() body: ${bodyType}` : undefined;
     const params = getParams(endpoint).map(param => `@Param('${param}') ${param}: string`);
     if (body) params.unshift(body);
+    const statusCode = endpoint.response?.statusCode;
+    const statusCodeStr = `@HttpCode(${statusCode})`;
 
     return removeExtraWhiteSpace(`
-      @${Capitalize(endpoint.method)}('${endpoint.path}')
+      @${Capitalize(endpoint.method)}('${endpoint.path}') ${statusCode ? '\n\t\t\t' + statusCodeStr : ''}
       ${endpoint.name}(${params.join(', ')}): ${responseType || 'void'} {
         // TODO: add business logic
       }`);
@@ -64,6 +66,7 @@ export class ControllerTemplate implements FileTemplate<EndpointGroup> {
       imports.push(endpoint.method);
       if (endpoint.path.includes(':')) imports.push('Param');
       if (endpoint.request) imports.push('Body');
+      if (endpoint.response?.statusCode) imports.push('HttpCode');
     }
     return `import { ${getDistinct(imports).join(', ')} } from '@nestjs/common';`;
   }
