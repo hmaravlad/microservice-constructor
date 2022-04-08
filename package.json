@@ -4,28 +4,28 @@
   "description": "",
   "main": "main.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/main.js",
     "serve": "tsnd --respawn --no-notify --transpile-only src/main.ts",
-    "test0": "tsc; node dist/main.js --source='data/t0.json'",
-    "lint": "eslint . --ext .ts",
-    "lint-fix": "eslint . --ext .ts --fix",
-    "build": "tsc"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test0": "rm -rf ./results/*; tsc; node dist/main.js --source='data/t0.json' --target='../results/project0'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hmaravlad/microservice-constructor.git"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^16.11.1",
+    "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.25.2",
-    "install": "^0.13.0",
     "ts-command-line-args": "^2.1.0",
+    "ts-node-dev": "^1.1.8",
     "typescript": "^4.4.4"
   },
   "devDependencies": {
+    "@types/mersenne-twister": "^1.1.2",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
-    "eslint": "^7.32.0",
-    "eslint-config-airbnb-typescript": "^14.0.1",
-    "ts-node-dev": "^1.1.8"
+    "eslint-config-airbnb-typescript": "^14.0.1"
   }
 }
