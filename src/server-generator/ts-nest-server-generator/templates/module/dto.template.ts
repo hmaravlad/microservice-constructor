@@ -7,6 +7,8 @@ import { addIndentation } from '../../../../utils/add-indentation';
 import { Capitalize, Decapitalize } from '../../../../utils/case-utils';
 import { getDistinct } from '../../../../utils/distinct';
 import { removeEmptyLines } from '../../../../utils/remove-empty-lines';
+import { isArray } from '../../../../utils/is-array';
+import { getNonArrayType } from '../../../../utils/get-array-item-type';
 
 export class DtoTemplate implements FileTemplate<Entity> {
   constructor(
@@ -40,13 +42,8 @@ export class DtoTemplate implements FileTemplate<Entity> {
   private generateField(field: Field, imports: string[]): string {
     const typeName = getTypeName(field as Value, this.endpointGroup, imports);
     return removeEmptyLines(removeExtraWhiteSpace(`
-      ${this.serviceConfig.docs ? `@ApiProperty(${this.isArray(typeName) ? '{ isArray: true }' : ''})` : ''}
+      ${this.serviceConfig.docs ? `@ApiProperty(${isArray(typeName) ? `{ type: ${getNonArrayType(typeName)}, isArray: true }` : ''})` : ''}
       ${field.name}: ${typeName};
     `));
-  }
-
-  private isArray(typeName: string): boolean {
-    const len = typeName.length;
-    return typeName[len - 2] === '[' && typeName[len - 1] === ']'; 
   }
 }
