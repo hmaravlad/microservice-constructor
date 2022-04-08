@@ -8,6 +8,8 @@ import { addIndentation } from '../../../../utils/add-indentation';
 import { Capitalize, Decapitalize } from '../../../../utils/case-utils';
 import { getDistinct } from '../../../../utils/distinct';
 import { removeEmptyLines } from '../../../../utils/remove-empty-lines';
+import { isArray } from '../../../../utils/is-array';
+import { getNonArrayType } from '../../../../utils/get-array-item-type';
 
 export class ControllerTemplate implements FileTemplate<EndpointGroup> {
   constructor(
@@ -55,8 +57,9 @@ export class ControllerTemplate implements FileTemplate<EndpointGroup> {
       ${statusCode ? '\n\t\t\t' + statusCodeStr : ''}
       ${this.serviceConfig.docs && (statusCode || responseType) ? `
       @ApiResponse({ 
-        ${statusCode ? `status: ${statusCode}` : ''}, 
-        ${responseType ? `type: ${responseType}` : ''}
+        ${statusCode ? `status: ${statusCode},` : ''}
+        ${responseType ? `type: ${getNonArrayType(responseType)},` : ''}
+        ${isArray(responseType || '') ? 'isArray: true,' : ''}
       })
       ` : ''}
       ${endpoint.name}(${params.join(', ')}): ${responseType || 'void'} {
