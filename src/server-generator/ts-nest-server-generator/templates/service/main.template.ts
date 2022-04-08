@@ -25,7 +25,7 @@ export class MainTsTemplate implements FileTemplate<ServiceConfig> {
 
           ${config.docs ? `
           const config = new DocumentBuilder()
-            .setTitle(${config.name})
+            .setTitle('${config.name}')
             .setDescription('${config.name} service API description')
             .setVersion('1.0')
             .build();
