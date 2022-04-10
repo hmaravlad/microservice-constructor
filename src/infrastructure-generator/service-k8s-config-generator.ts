@@ -9,8 +9,6 @@ export class ServiceK8SConfigGenerator implements FilesGenerator<ServiceConfig> 
 
   generateFiles(config: ServiceConfig): File[] {
     const deplTemplate = new DeplTemplate(this.projectConfig);
-    const f = [deplTemplate.getFile(config)];
-    console.dir({ f });
-    return f;
+    return [deplTemplate.getFile(config)];
   }
 }
