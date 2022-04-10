@@ -1,10 +1,14 @@
+import { getDistinct } from './../../utils/distinct';
 import { File } from './../../types/file';
 import { FileTemplate } from './../../types/file-template';
 import { ProjectConfig } from './../../types/project-config';
+import { removeEmptyLines } from './../../utils/remove-empty-lines';
 
 export class IngressSrvTemplate implements FileTemplate<ProjectConfig> {
 
   getFile(config: ProjectConfig): File {
+    if (!this.checkPrefixes(config)) throw new Error('Prefixes must be unique');
+
     return {
       name: 'ingress-srv.yaml',
       path: 'infra/',
@@ -20,14 +24,19 @@ export class IngressSrvTemplate implements FileTemplate<ProjectConfig> {
           rules:
             - host: ${config.hostname}
               http:
-                paths: ${config.services.map(serviceConfig => serviceConfig.api?.endpointGroups.map(endpointGroup => `
+                paths: ${'\n' + removeEmptyLines(config.services.flatMap(serviceConfig => serviceConfig.api?.endpointGroups.map(endpointGroup => `
                   - path: /${endpointGroup.prefix}/?(.*)
                     backend:
                       serviceName: ${serviceConfig.name}-srv
                       servicePort: ${serviceConfig.port}    
-                `))}
+                `)).reduce((prev, curr) => (prev || '') + (curr + ''), '') || '')}
       `,
     };
+  }
+
+  checkPrefixes(config: ProjectConfig): boolean {
+    const prefixes = config.services.flatMap(serviceConfig => serviceConfig.api?.endpointGroups.map(group => group.prefix));
+    return getDistinct(prefixes).length === prefixes.length;
   }
 }
 
