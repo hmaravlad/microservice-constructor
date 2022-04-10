@@ -1,3 +1,4 @@
+import { InfrastructureGenerator } from './infrastructure-generator';
 import { ServerGeneratorFactory } from './server-generator/server-generator-factory';
 import { generateService } from './service-generator';
 import { File } from './types/file';
@@ -9,6 +10,8 @@ export async function generateProject(projectConfig: ProjectConfig): Promise<Fil
   for (const service of projectConfig.services) {
     files.push(...await generateService(service, serverGeneratorFactory));
   }
+  const infrastructureGenerator = new InfrastructureGenerator();
+  files.push(...infrastructureGenerator.generateFiles(projectConfig));
   return files;
 }
 

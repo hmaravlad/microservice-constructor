@@ -6,5 +6,6 @@ export interface ProjectConfig {
     provider: string;
     deployTarget: string;
   };
+  dockerUsername: string;
   services: ServiceConfig[];
 }

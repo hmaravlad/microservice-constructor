@@ -4,6 +4,7 @@ export interface ServiceConfig {
   lang: string;
   port: number;
   docs: boolean;
+  replicas: number;
   api?: APIConfig;
 }
 
