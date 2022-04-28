@@ -1,3 +1,4 @@
+import { CICDGeneratorFactory } from './cicd-generator/cicd-generator-factory';
 import { InfrastructureGenerator } from './infrastructure-generator';
 import { ServerGeneratorFactory } from './server-generator/server-generator-factory';
 import { generateService } from './service-generator';
@@ -12,6 +13,9 @@ export async function generateProject(projectConfig: ProjectConfig): Promise<Fil
   }
   const infrastructureGenerator = new InfrastructureGenerator();
   files.push(...infrastructureGenerator.generateFiles(projectConfig));
+  const providers = `${projectConfig.ci.provider}-${projectConfig.ci.deployTarget}`;
+  const cicdGenerator = new CICDGeneratorFactory().getCICDGenerator(providers);
+  files.push(...cicdGenerator.generateFiles(projectConfig));
   return files;
 }
 
