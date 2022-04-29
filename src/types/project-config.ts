@@ -1,3 +1,4 @@
+import { EventBus } from './event-bus';
 import { ServiceConfig } from './service-config';
 
 export interface ProjectConfig {
@@ -8,5 +9,6 @@ export interface ProjectConfig {
     deployTarget: string;
   };
   dockerUsername: string;
+  eventBus: EventBus;
   services: ServiceConfig[];
 }

@@ -1,4 +1,5 @@
 import { CICDGeneratorFactory } from './cicd-generator/cicd-generator-factory';
+import { EventBusGeneratorFactory } from './event-bus-generator/event-bus-generator-factory';
 import { InfrastructureGenerator } from './infrastructure-generator';
 import { ServerGeneratorFactory } from './server-generator/server-generator-factory';
 import { generateService } from './service-generator';
@@ -16,6 +17,8 @@ export async function generateProject(projectConfig: ProjectConfig): Promise<Fil
   const providers = `${projectConfig.ci.provider}-${projectConfig.ci.deployTarget}`;
   const cicdGenerator = new CICDGeneratorFactory().getCICDGenerator(providers);
   files.push(...cicdGenerator.generateFiles(projectConfig));
+  const eventBusGenerator = new EventBusGeneratorFactory().getEventBusGenerator(projectConfig.eventBus.type);
+  files.push(...eventBusGenerator.generateFiles(projectConfig.eventBus));
   return files;
 }
 
