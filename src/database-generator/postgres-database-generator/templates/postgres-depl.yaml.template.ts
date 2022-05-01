@@ -1,4 +1,4 @@
-import { Database } from 'src/types/database';
+import { Database } from '../../../types/database';
 import { File } from '../../../types/file';
 import { FileTemplate } from '../../../types/file-template';
 
@@ -38,7 +38,7 @@ export class PostgresDeplTemplate implements FileTemplate<Database> {
                     valueFrom:
                       secretKeyRef:
                         name: ${database.name}-password-secret
-                        key: POSTGRES_PASSWORD            
+                        key: ${database.name.toUpperCase()}_POSTGRES_PASSWORD            
               volumes:
               - name: ${database.name}-postgres-data
                 persistentVolumeClaim:

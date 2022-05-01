@@ -1,4 +1,4 @@
-import { Database } from 'src/types/database';
+import { Database } from '../../../types/database';
 import { File } from '../../../types/file';
 import { FileTemplate } from '../../../types/file-template';
 
@@ -11,10 +11,10 @@ export class PostgresPasswordTemplate implements FileTemplate<Database> {
         apiVersion: v1
         kind: Secret
         metadata:
-          name: ${database.name}-password-secret
+          name: ${database.name}-postgres-password-secret
         type: Opaque
         data:
-          POSTGRES_PASSWORD: $${database.name.toUpperCase()}_POSTGRES_PASSWORD_BASE64
+        ${database.name.toUpperCase()}_POSTGRES_PASSWORD: $${database.name.toUpperCase()}_POSTGRES_PASSWORD_BASE64
       `,
     };
   }

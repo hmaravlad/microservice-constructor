@@ -1,9 +1,8 @@
 import { EventBus } from '../../../types/event-bus';
 import { File } from '../../../types/file';
 import { FileTemplate } from '../../../types/file-template';
-import { ServiceConfig } from '../../../types/service-config';
 
-export class KafkaBrokerTemplate implements FileTemplate<ServiceConfig> {
+export class KafkaBrokerTemplate implements FileTemplate<EventBus> {
   getFile(eventBus: EventBus): File{
     return {
       name: 'kafka-broker.yaml',

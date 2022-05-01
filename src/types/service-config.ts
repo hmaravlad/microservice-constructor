@@ -1,4 +1,5 @@
 export interface ServiceConfig {
+  id: number;
   name: string;
   type: string;
   lang: string;

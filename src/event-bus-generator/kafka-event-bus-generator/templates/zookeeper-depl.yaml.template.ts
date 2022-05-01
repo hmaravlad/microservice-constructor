@@ -1,9 +1,8 @@
 import { EventBus } from '../../../types/event-bus';
 import { File } from '../../../types/file';
 import { FileTemplate } from '../../../types/file-template';
-import { ServiceConfig } from '../../../types/service-config';
 
-export class ZookeeperDeplTemplate implements FileTemplate<ServiceConfig> {
+export class ZookeeperDeplTemplate implements FileTemplate<EventBus> {
   getFile(eventBus: EventBus): File{
     return {
       name: 'zookeeper-depl.yaml',

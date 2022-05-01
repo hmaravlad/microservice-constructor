@@ -1,3 +1,5 @@
+import { EnvVariableProvider } from '../../types/env-provider';
+import { EnvVariable } from '../../types/env-variable';
 import { EventBus } from '../../types/event-bus';
 import { File } from '../../types/file';
 import { FileTemplate } from '../../types/file-template';
@@ -7,7 +9,7 @@ import { KafkaServiceTemplate } from './templates/kafka-service.yaml.template';
 import { ZookeeperDeplTemplate } from './templates/zookeeper-depl.yaml.template';
 import { ZookeeperServiceTemplate } from './templates/zookeeper-service.yaml.template';
 
-export default class KafkaEventBusGenerator implements FilesGenerator<EventBus> {
+export default class KafkaEventBusGenerator implements FilesGenerator<EventBus>, EnvVariableProvider<EventBus> {
   templates: FileTemplate<EventBus>[] = [
     new ZookeeperDeplTemplate(),
     new ZookeeperServiceTemplate(),
@@ -18,5 +20,9 @@ export default class KafkaEventBusGenerator implements FilesGenerator<EventBus> 
   generateFiles(config: EventBus): File[] {
     const files = this.templates.map(template => template.getFile(config));
     return files;
+  }
+
+  getEnvVariables(): EnvVariable[] {
+    return [];
   }
 }
