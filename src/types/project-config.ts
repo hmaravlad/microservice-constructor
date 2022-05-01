@@ -1,3 +1,4 @@
+import { Database } from './database';
 import { EventBus } from './event-bus';
 import { ServiceConfig } from './service-config';
 
@@ -11,4 +12,5 @@ export interface ProjectConfig {
   dockerUsername: string;
   eventBus: EventBus;
   services: ServiceConfig[];
+  databases: Database[];
 }

@@ -1,4 +1,5 @@
 import { CICDGeneratorFactory } from './cicd-generator/cicd-generator-factory';
+import { DatabaseGeneratorFactory } from './database-generator/database-generator-factory';
 import { EventBusGeneratorFactory } from './event-bus-generator/event-bus-generator-factory';
 import { InfrastructureGenerator } from './infrastructure-generator';
 import { ServerGeneratorFactory } from './server-generator/server-generator-factory';
@@ -19,6 +20,11 @@ export async function generateProject(projectConfig: ProjectConfig): Promise<Fil
   files.push(...cicdGenerator.generateFiles(projectConfig));
   const eventBusGenerator = new EventBusGeneratorFactory().getEventBusGenerator(projectConfig.eventBus.type);
   files.push(...eventBusGenerator.generateFiles(projectConfig.eventBus));
+  const databaseGeneratorFactory = new DatabaseGeneratorFactory();
+  for (const database of projectConfig.databases) {
+    const databaseGenerator = databaseGeneratorFactory.getDatabaseGenerator(database.type);
+    files.push(...databaseGenerator.generateFiles(database));
+  }
   return files;
 }
 
