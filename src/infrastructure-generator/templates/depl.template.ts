@@ -25,9 +25,9 @@ export class DeplTemplate implements FileTemplate<ServiceConfig> {
       secrets.push(...databaseGenerator.getSecrets(db));
     }
 
-    const eventBusses = [this.projectConfig.eventBus].filter(({ serviceIds }) => serviceIds.includes(serviceConfig.id) );
+    const eventBuses = [this.projectConfig.eventBus].filter(({ serviceIds }) => serviceIds.includes(serviceConfig.id) );
     
-    for (const eventBus of eventBusses) {
+    for (const eventBus of eventBuses) {
       const eventBusGenerator = new EventBusGeneratorFactory().getEventBusGenerator(eventBus.type);  
       envs.push(...eventBusGenerator.getEnvVariables(eventBus));
     }
