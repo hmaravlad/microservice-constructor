@@ -1,14 +1,17 @@
 import { FilesGenerator } from '../types/files-generator';
-import { Database } from 'src/types/database';
+import { Database } from '../types/database';
 import { PostgresDatabaseGenerator } from './postgres-database-generator';
-
-export const databaseGenerators: { [key: string]: FilesGenerator<Database> } = {
-  'postgres': new PostgresDatabaseGenerator(),
-};
+import { SecretsCreator } from '../secret-creator';
 
 export class DatabaseGeneratorFactory {
+  constructor(private secretsCreator: SecretsCreator) {}
+
+  databaseGenerators: { [key: string]: FilesGenerator<Database> } = {
+    'postgres': new PostgresDatabaseGenerator(this.secretsCreator),
+  };  
+
   getDatabaseGenerator(type: string): FilesGenerator<Database> {
-    const databaseGenerator = databaseGenerators[type];
+    const databaseGenerator = this.databaseGenerators[type];
     if (!databaseGenerator) {
       throw new Error(`Database ${type} is not supported`);
     } 

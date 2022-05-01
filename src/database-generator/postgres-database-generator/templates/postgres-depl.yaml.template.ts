@@ -29,6 +29,16 @@ export class PostgresDeplTemplate implements FileTemplate<Database> {
                 volumeMounts:
                 - name: ${database.name}-postgres-data
                   mountPath: /var/lib/postgresql
+                env:
+                  - name: POSTGRES_DB
+                    value: '${database.name}'
+                  - name: POSTGRES_USER
+                    value: '${database.name}-admin'
+                  - name: POSTGRES_PASSWORD
+                    valueFrom:
+                      secretKeyRef:
+                        name: ${database.name}-password-secret
+                        key: POSTGRES_PASSWORD            
               volumes:
               - name: ${database.name}-postgres-data
                 persistentVolumeClaim:

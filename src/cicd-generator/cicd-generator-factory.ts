@@ -1,14 +1,18 @@
 import { ProjectConfig } from '../types/project-config';
 import { FilesGenerator } from '../types/files-generator';
 import GithubDoCICDGenerator from './github-do-cicd-generator';
-
-export const cicdGenerators: { [key: string]: FilesGenerator<ProjectConfig> } = {
-  'github-actions-digitalocean': new GithubDoCICDGenerator(),
-};
+import { SetSecretsCommandsProvider } from '../types/set-secrets-commands-provider';
+import { SecretsCreator } from '../secret-creator';
 
 export class CICDGeneratorFactory {
-  getCICDGenerator(providers: string): FilesGenerator<ProjectConfig> {
-    const cicdGenerator = cicdGenerators[providers];
+  constructor(private secretsCreator: SecretsCreator) {}
+
+  cicdGenerators: { [key: string]: FilesGenerator<ProjectConfig> & SetSecretsCommandsProvider } = {
+    'github-actions-digitalocean': new GithubDoCICDGenerator(this.secretsCreator),
+  };
+
+  getCICDGenerator(providers: string): FilesGenerator<ProjectConfig> & SetSecretsCommandsProvider {
+    const cicdGenerator = this.cicdGenerators[providers];
     if (!cicdGenerator) {
       throw new Error(`Providers ${providers} are not supported`);
     } 

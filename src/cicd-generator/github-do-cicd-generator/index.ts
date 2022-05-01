@@ -1,3 +1,6 @@
+import { SecretsCreator } from '../../secret-creator';
+import { Secret } from '../../types/secret';
+import { SetSecretsCommandsProvider } from '../../types/set-secrets-commands-provider';
 import { ServerGeneratorFactory } from '../../server-generator/server-generator-factory';
 import { File } from '../../types/file';
 import { FilesGenerator } from '../../types/files-generator';
@@ -7,8 +10,11 @@ import { DeployManifestsYamlTemplate } from './templates/deploy-manifests.yaml.t
 import { DeployYamlTemplate } from './templates/deploy.yaml.template';
 import { TestsYamlTemplate } from './templates/tests.yaml.template';
 
-export default class GithubDoCICDGenerator implements FilesGenerator<ProjectConfig> {
+export default class GithubDoCICDGenerator implements FilesGenerator<ProjectConfig>, SetSecretsCommandsProvider {
+  constructor(private secretsCreator: SecretsCreator) {}
+
   generateFiles(config: ProjectConfig): File[] {
+    this.addSecrets();
     const files: File[] = [];
     const serverGeneratorFactory = new ServerGeneratorFactory();
     const deployTemplate = new DeployYamlTemplate(config);
@@ -26,5 +32,15 @@ export default class GithubDoCICDGenerator implements FilesGenerator<ProjectConf
     const testCommands = serverGenerator.getTestCommands();
     const serviceTestWorkflow = new TestsYamlTemplate(testCommands).getFile(serviceConfig);
     return serviceTestWorkflow;
+  }
+
+  addSecrets(): void {
+    this.secretsCreator.addSecret('GH_TOKEN');
+  }
+
+  getSetSecretsCommands(secrets: Secret[]): string[] {
+    const commands = ['gh auth login --with-token $GH_TOKEN'];
+    commands.push(...secrets.map(secret => `gh secret set ${secret.name} --body "$${secret.name}"`));
+    return commands;
   }
 }
