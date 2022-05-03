@@ -1,3 +1,4 @@
+import { TestCommandsProvider } from 'src/types/test-command-provider';
 import { File } from '../../types/file';
 import { FileTemplate } from '../../types/file-template';
 import { FilesGenerator } from '../../types/files-generator';
@@ -14,7 +15,7 @@ import { PrettierrcTemplate } from './templates/service/prettierrc.template';
 import { TsconfigBuildJsonTemplate } from './templates/service/tsconfig.build.template';
 import { TsconfigJsonTemplate } from './templates/service/tsconfig.template';
 
-export default class TsNestServerGenerator implements FilesGenerator<ServiceConfig> {
+export default class TsNestServerGenerator implements FilesGenerator<ServiceConfig>, TestCommandsProvider {
   templates: FileTemplate<ServiceConfig>[] = [
     new AppControllerTsTemplate(),
     new AppModuleTsTemplate(),
@@ -41,5 +42,12 @@ export default class TsNestServerGenerator implements FilesGenerator<ServiceConf
       }
     }
     return files;
+  }
+
+  getTestCommands(): string[] {
+    return [
+      'npm install',
+      'npm run test',
+    ];
   }
 }
