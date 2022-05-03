@@ -1,14 +1,14 @@
-import { DatabaseGeneratorFactory } from './../../database-generator/database-generator-factory';
-import { EventBusGeneratorFactory } from './../../event-bus-generator/event-bus-generator-factory';
-import { SecretsCreator } from './../../secret-creator';
-import { EnvVariable } from './../../types/env-variable';
-import { addIndentation } from './../../utils/add-indentation';
-import { removeEmptyLines } from './../../utils/remove-empty-lines';
-import { removeExtraWhiteSpace } from './../../utils/remove-extra-white-space';
-import { File } from './../../types/file';
-import { FileTemplate } from './../../types/file-template';
-import { ProjectConfig } from './../../types/project-config';
-import { ServiceConfig } from './../../types/service-config';
+import { DatabaseGeneratorFactory } from '../../database-generator/database-generator-factory';
+import { EventBusGeneratorFactory } from '../../event-bus-generator/event-bus-generator-factory';
+import { SecretsCreator } from '../../secret-creator';
+import { EnvVariable } from '../../types/env-variable';
+import { addIndentation } from '../../utils/add-indentation';
+import { removeEmptyLines } from '../../utils/remove-empty-lines';
+import { removeExtraWhiteSpace } from '../../utils/remove-extra-white-space';
+import { File } from '../../types/file';
+import { FileTemplate } from '../../types/file-template';
+import { ProjectConfig } from '../../types/project-config';
+import { ServiceConfig } from '../../types/service-config';
 
 export class DeplTemplate implements FileTemplate<ServiceConfig> {
   constructor(private projectConfig: ProjectConfig) {}
