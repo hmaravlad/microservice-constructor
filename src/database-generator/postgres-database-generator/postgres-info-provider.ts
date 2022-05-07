@@ -1,6 +1,6 @@
 import { EnvVariableProvider, SecretProvider } from '../../types/env-provider';
 import { EnvVariable } from '../../types/env-variable';
-import { ProjectConfig } from '../../types/project-config';
+import { ProjectConfig } from '../../types/config/project-config';
 
 export class PostgresInfoProvider implements EnvVariableProvider, SecretProvider {
   constructor(private projectConfig: ProjectConfig) {}

@@ -1,5 +1,5 @@
 import { GeneratorMapping } from './types/generator-mapping';
-import { ProjectConfig } from './types/project-config';
+import { ProjectConfig } from './types/config/project-config';
 
 export class InfoProviderFactory<T> {
   constructor(public generatorMapping: GeneratorMapping<unknown, T>) {}

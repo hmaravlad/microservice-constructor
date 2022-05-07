@@ -1,6 +1,6 @@
 import { SecretsCreator } from '../../secret-creator';
-import { ProjectConfig } from '../../types/project-config';
-import { EventBus } from '../../types/event-bus';
+import { ProjectConfig } from '../../types/config/project-config';
+import { EventBus } from '../../types/config/event-bus';
 import { File } from '../../types/file';
 import { FileTemplate } from '../../types/file-template';
 import { FilesGenerator } from '../../types/files-generator';

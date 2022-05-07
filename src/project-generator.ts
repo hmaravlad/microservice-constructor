@@ -6,7 +6,7 @@ import { SecretsCreator } from './secret-creator';
 import { serverGeneratorFactory } from './server-generator/server-generator-factory';
 import { ServiceK8SConfigGenerator } from './service-k8s-config-generator/service-k8s-config-generator';
 import { File } from './types/file';
-import { ProjectConfig } from './types/project-config';
+import { ProjectConfig } from './types/config/project-config';
 import { getFilesGetter } from './utils/get-files-getter';
 
 

@@ -2,7 +2,7 @@ import { readFileSync } from 'fs';
 import { parse } from 'ts-command-line-args';
 import { generateProject } from './project-generator';
 import { IArgs, argsConfig } from './types/command-line-args';
-import { ProjectConfig } from './types/project-config';
+import { ProjectConfig } from './types/config/project-config';
 import { FileWriter } from './writer';
 
 (async () => {

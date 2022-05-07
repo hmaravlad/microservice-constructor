@@ -1,7 +1,7 @@
 import { removeEmptyLines } from '../../../../utils/remove-empty-lines';
 import { File } from '../../../../types/file';
 import { FileTemplate } from '../../../../types/file-template';
-import { ServiceConfig } from '../../../../types/service-config';
+import { ServiceConfig } from '../../../../types/config/service-config';
 
 export class PackageJsonTemplate implements FileTemplate<ServiceConfig> {
   getFile(config: ServiceConfig): File {

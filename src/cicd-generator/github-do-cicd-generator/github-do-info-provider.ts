@@ -1,4 +1,4 @@
-import { ProjectConfig } from '../../types/project-config';
+import { ProjectConfig } from '../../types/config/project-config';
 import { Secret } from '../../types/secret';
 import { SetSecretsCommandsProvider } from '../../types/set-secrets-commands-provider';
 

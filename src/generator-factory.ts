@@ -1,7 +1,7 @@
 import { SecretsCreator } from './secret-creator';
 import { FilesGenerator } from './types/files-generator';
 import { GeneratorMapping } from './types/generator-mapping';
-import { ProjectConfig } from './types/project-config';
+import { ProjectConfig } from './types/config/project-config';
 
 export class GeneratorFactory<T> {
   constructor(public generatorMapping: GeneratorMapping<T, unknown>) {}

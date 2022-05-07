@@ -1,9 +1,9 @@
 import { SecretsCreator } from '../../secret-creator';
-import { ProjectConfig } from '../../types/project-config';
+import { ProjectConfig } from '../../types/config/project-config';
 import { File } from '../../types/file';
 import { FileTemplate } from '../../types/file-template';
 import { FilesGenerator } from '../../types/files-generator';
-import { ServiceConfig } from '../../types/service-config';
+import { ServiceConfig } from '../../types/config/service-config';
 import ModuleGenerator from './module-generator';
 import { AppControllerTsTemplate } from './templates/service/app.controller.template';
 import { AppModuleTsTemplate } from './templates/service/app.module.template';

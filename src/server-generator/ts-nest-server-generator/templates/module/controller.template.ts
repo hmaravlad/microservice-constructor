@@ -1,7 +1,7 @@
 import { removeExtraWhiteSpace } from '../../../../utils/remove-extra-white-space';
 import { File } from '../../../../types/file';
 import { FileTemplate } from '../../../../types/file-template';
-import { Endpoint, EndpointGroup, ServiceConfig, Value } from '../../../../types/service-config';
+import { Endpoint, EndpointGroup, ServiceConfig, Value } from '../../../../types/config/service-config';
 import { getTypeName } from '../../get-type-name';
 import { getParams } from '../../path-parsing';
 import { addIndentation } from '../../../../utils/add-indentation';

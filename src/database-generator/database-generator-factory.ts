@@ -1,10 +1,10 @@
-import { Database } from '../types/database';
+import { Database } from '../types/config/database';
 import { PostgresDatabaseGenerator } from './postgres-database-generator';
 import { SecretsCreator } from '../secret-creator';
 import { EnvVariableProvider, SecretProvider } from 'src/types/env-provider';
 import { GeneratorMapping } from 'src/types/generator-mapping';
 import { PostgresInfoProvider } from './postgres-database-generator/postgres-info-provider';
-import { ProjectConfig } from '../types/project-config';
+import { ProjectConfig } from '../types/config/project-config';
 import { GeneratorFactory } from '../generator-factory';
 import { InfoProviderFactory } from '../info-provider-factory';
 

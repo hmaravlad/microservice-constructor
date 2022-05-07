@@ -1,9 +1,9 @@
 import { getDistinct } from '../../utils/distinct';
 import { File } from '../../types/file';
 import { FileTemplate } from '../../types/file-template';
-import { ProjectConfig } from '../../types/project-config';
+import { ProjectConfig } from '../../types/config/project-config';
 import { removeEmptyLines } from '../../utils/remove-empty-lines';
-import { Gateway } from 'src/types/gateway';
+import { Gateway } from '../../types/config/gateway';
 
 export class IngressSrvTemplate implements FileTemplate<Gateway> {
   constructor(private config: ProjectConfig) {}

@@ -1,4 +1,4 @@
-import { ProjectConfig } from '../types/project-config';
+import { ProjectConfig } from '../types/config/project-config';
 import GithubDoCICDGenerator from './github-do-cicd-generator';
 import { SetSecretsCommandsProvider } from '../types/set-secrets-commands-provider';
 import { SecretsCreator } from '../secret-creator';

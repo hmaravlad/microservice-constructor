@@ -1,4 +1,4 @@
-import { ProjectConfig } from '../../types/project-config';
+import { ProjectConfig } from '../../types/config/project-config';
 import { TestCommandsProvider } from '../../types/test-command-provider';
 
 export class TsNestInfoProvider implements TestCommandsProvider {

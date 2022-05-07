@@ -1,9 +1,9 @@
-import { EventBus } from '../types/event-bus';
+import { EventBus } from '../types/config/event-bus';
 import KafkaEventBusGenerator from './kafka-event-bus-generator';
 import { EnvVariableProvider } from './../types/env-provider';
 import { GeneratorMapping } from '../types/generator-mapping';
 import { KafkaInfoProvider } from './kafka-event-bus-generator/kafka-info-provider';
-import { ProjectConfig } from '../types/project-config';
+import { ProjectConfig } from '../types/config/project-config';
 import { SecretsCreator } from '../secret-creator';
 import { InfoProviderFactory } from '../info-provider-factory';
 import { GeneratorFactory } from '../generator-factory';

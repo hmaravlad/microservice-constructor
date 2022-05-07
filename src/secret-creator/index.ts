@@ -2,7 +2,7 @@ import prompt from 'prompt';
 import { cicdInfoProviderFactory } from '../cicd-generator/cicd-generator-factory';
 import { File } from '../types/file';
 import { FilesGenerator } from '../types/files-generator';
-import { ProjectConfig } from '../types/project-config';
+import { ProjectConfig } from '../types/config/project-config';
 import { Secret } from '../types/secret';
 import { SecretsShTemplate } from './templates/secrets.sh.template';
 

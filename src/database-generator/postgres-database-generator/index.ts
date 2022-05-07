@@ -1,6 +1,6 @@
-import { ProjectConfig } from '../../types/project-config';
+import { ProjectConfig } from '../../types/config/project-config';
 import { SecretsCreator } from '../../secret-creator';
-import { Database } from '../../types/database';
+import { Database } from '../../types/config/database';
 import { File } from '../../types/file';
 import { FileTemplate } from '../../types/file-template';
 import { FilesGenerator } from '../../types/files-generator';

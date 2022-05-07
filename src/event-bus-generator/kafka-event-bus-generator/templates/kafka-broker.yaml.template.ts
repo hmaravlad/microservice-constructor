@@ -1,4 +1,4 @@
-import { EventBus } from '../../../types/event-bus';
+import { EventBus } from '../../../types/config/event-bus';
 import { File } from '../../../types/file';
 import { FileTemplate } from '../../../types/file-template';
 

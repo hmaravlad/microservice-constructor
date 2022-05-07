@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { GeneratorFactory } from 'src/generator-factory';
-import { SecretsCreator } from 'src/secret-creator';
-import { File } from 'src/types/file';
-import { ProjectConfig } from 'src/types/project-config';
+import { GeneratorFactory } from '../generator-factory';
+import { SecretsCreator } from '../secret-creator';
+import { File } from '../types/file';
+import { ProjectConfig } from '../types/config/project-config';
 
 const generateFromOneInput = <T extends { [key: string]: any }>(factory: GeneratorFactory<T>, input: T, typeField: string, secretsCreator: SecretsCreator, projectConfig: ProjectConfig) => {
   const type = input[typeField];

@@ -1,4 +1,4 @@
-import { Database } from '../../../types/database';
+import { Database } from '../../../types/config/database';
 import { File } from '../../../types/file';
 import { FileTemplate } from '../../../types/file-template';
 

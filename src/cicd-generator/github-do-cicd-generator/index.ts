@@ -2,8 +2,8 @@ import { serverInfoProviderFactory } from '../../server-generator/server-generat
 import { SecretsCreator } from '../../secret-creator';
 import { File } from '../../types/file';
 import { FilesGenerator } from '../../types/files-generator';
-import { ProjectConfig } from '../../types/project-config';
-import { ServiceConfig } from '../../types/service-config';
+import { ProjectConfig } from '../../types/config/project-config';
+import { ServiceConfig } from '../../types/config/service-config';
 import { DeployManifestsYamlTemplate } from './templates/deploy-manifests.yaml.template';
 import { DeployYamlTemplate } from './templates/deploy.yaml.template';
 import { TestsYamlTemplate } from './templates/tests.yaml.template';

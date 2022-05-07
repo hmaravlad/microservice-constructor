@@ -5,8 +5,8 @@ import { removeEmptyLines } from '../../utils/remove-empty-lines';
 import { removeExtraWhiteSpace } from '../../utils/remove-extra-white-space';
 import { File } from '../../types/file';
 import { FileTemplate } from '../../types/file-template';
-import { ProjectConfig } from '../../types/project-config';
-import { ServiceConfig } from '../../types/service-config';
+import { ProjectConfig } from '../../types/config/project-config';
+import { ServiceConfig } from '../../types/config/service-config';
 import { eventBusInfoProviderFactory } from '../../event-bus-generator/event-bus-generator-factory';
 
 export class DeplTemplate implements FileTemplate<ServiceConfig> {

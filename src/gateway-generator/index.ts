@@ -1,6 +1,6 @@
 import { File } from '../types/file';
 import { FilesGenerator } from '../types/files-generator';
-import { ProjectConfig } from '../types/project-config';
+import { ProjectConfig } from '../types/config/project-config';
 import { IngressSrvTemplate } from './templates/ingress-srv.template';
 
 export class GatewayGenerator implements FilesGenerator<ProjectConfig> {
