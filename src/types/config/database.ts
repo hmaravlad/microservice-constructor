@@ -1,6 +1,9 @@
-export interface Database {
+export class Database {
   id: number;
+
   name: string;
+
   type: string;
+
   sizeGb: number;
 }

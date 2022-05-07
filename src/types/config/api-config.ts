@@ -1,43 +1,54 @@
-export interface APIConfig {
+export class APIConfig {
   endpointGroups: EndpointGroup[];
 }
 
-export interface EndpointGroup {
+export class EndpointGroup {
   name: string;
+
   prefix: string;
+
   endpoints: Endpoint[];
+
   entities: Entity[];
 }
 
-export interface Endpoint {
+export class Endpoint {
   name: string;
+
   path: string;
+
   method: string;
+
   request?: Exchange;
-  response?: Exchange
+
+  response?: Exchange;
 }
 
-export interface Entity {
+export class Entity {
   id: number;
+
   name: string;
+
   fields: Field[];
 }
 
-export interface Value {
+export class Value {
   type: string | EntityRef;
+
   items?: Value;
 }
 
-export interface Field extends Value {
+export class Field extends Value {
   name: string;
 }
 
-export interface Exchange {
+export class Exchange {
   statusCode?: number;
+
   content: Value;
 }
 
-export interface EntityRef {
+export class EntityRef {
   id: number;
 }
 
