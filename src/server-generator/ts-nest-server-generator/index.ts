@@ -1,8 +1,9 @@
-import { TestCommandsProvider } from 'src/types/test-command-provider';
+import { SecretsCreator } from '../../secret-creator';
+import { ProjectConfig } from '../../types/config/project-config';
 import { File } from '../../types/file';
 import { FileTemplate } from '../../types/file-template';
 import { FilesGenerator } from '../../types/files-generator';
-import { ServiceConfig } from '../../types/service-config';
+import { ServiceConfig } from '../../types/config/service-config';
 import ModuleGenerator from './module-generator';
 import { AppControllerTsTemplate } from './templates/service/app.controller.template';
 import { AppModuleTsTemplate } from './templates/service/app.module.template';
@@ -15,7 +16,12 @@ import { PrettierrcTemplate } from './templates/service/prettierrc.template';
 import { TsconfigBuildJsonTemplate } from './templates/service/tsconfig.build.template';
 import { TsconfigJsonTemplate } from './templates/service/tsconfig.template';
 
-export default class TsNestServerGenerator implements FilesGenerator<ServiceConfig>, TestCommandsProvider {
+export default class TsNestServerGenerator implements FilesGenerator<ServiceConfig> {
+  constructor(
+    private secretsCreator: SecretsCreator, 
+    private projectConfig: ProjectConfig,
+  ) {}
+
   templates: FileTemplate<ServiceConfig>[] = [
     new AppControllerTsTemplate(),
     new AppModuleTsTemplate(),
@@ -42,12 +48,5 @@ export default class TsNestServerGenerator implements FilesGenerator<ServiceConf
       }
     }
     return files;
-  }
-
-  getTestCommands(): string[] {
-    return [
-      'npm install',
-      'npm run test',
-    ];
   }
 }

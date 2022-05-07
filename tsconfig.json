@@ -11,10 +11,11 @@
     "noEmitOnError": true,
 
     /* Strict Type-Checking Options */
-    "strict": true,                           /* Enable all strict type-checking options. */
+    "strict": true,             
     "strictNullChecks": true,
     "strictFunctionTypes": true,
     "strictBindCallApply": true,
+    "strictPropertyInitialization": false,
     "noImplicitAny": true,
     /* Additional Checks */
     "noUnusedLocals": false,                /* Report errors on unused locals. */

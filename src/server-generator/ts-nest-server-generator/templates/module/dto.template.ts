@@ -1,7 +1,8 @@
 import { removeExtraWhiteSpace } from '../../../../utils/remove-extra-white-space';
 import { File } from '../../../../types/file';
 import { FileTemplate } from '../../../../types/file-template';
-import { EndpointGroup, Entity, Field, ServiceConfig, Value } from '../../../../types/service-config';
+import { EndpointGroup, Entity, Field, Value } from '../../../../types/config/api-config';
+import { ServiceConfig } from '../../../../types/config/service-config';
 import { getTypeName } from '../../get-type-name';
 import { addIndentation } from '../../../../utils/add-indentation';
 import { Capitalize, Decapitalize } from '../../../../utils/case-utils';

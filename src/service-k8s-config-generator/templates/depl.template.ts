@@ -1,14 +1,13 @@
-import { DatabaseGeneratorFactory } from '../../database-generator/database-generator-factory';
-import { EventBusGeneratorFactory } from '../../event-bus-generator/event-bus-generator-factory';
-import { SecretsCreator } from '../../secret-creator';
+import {  databaseInfoProviderFactory } from '../../database-generator/database-generator-factory';
 import { EnvVariable } from '../../types/env-variable';
 import { addIndentation } from '../../utils/add-indentation';
 import { removeEmptyLines } from '../../utils/remove-empty-lines';
 import { removeExtraWhiteSpace } from '../../utils/remove-extra-white-space';
 import { File } from '../../types/file';
 import { FileTemplate } from '../../types/file-template';
-import { ProjectConfig } from '../../types/project-config';
-import { ServiceConfig } from '../../types/service-config';
+import { ProjectConfig } from '../../types/config/project-config';
+import { ServiceConfig } from '../../types/config/service-config';
+import { eventBusInfoProviderFactory } from '../../event-bus-generator/event-bus-generator-factory';
 
 export class DeplTemplate implements FileTemplate<ServiceConfig> {
   constructor(private projectConfig: ProjectConfig) {}
@@ -17,19 +16,19 @@ export class DeplTemplate implements FileTemplate<ServiceConfig> {
     const envs: EnvVariable[] = [];
     const secrets: string[] = [];
 
-    const dbs = this.projectConfig.databases.filter(({ serviceIds }) => serviceIds.includes(serviceConfig.id) );
+    const dbs = this.projectConfig.databases.filter(({ id }) => serviceConfig.databaseIds.includes(id) );
     
     for (const db of dbs) {
-      const databaseGenerator = new DatabaseGeneratorFactory(new SecretsCreator).getDatabaseGenerator(db.type);  
-      envs.push(...databaseGenerator.getEnvVariables(db));
-      secrets.push(...databaseGenerator.getSecrets(db));
+      const databaseGenerator = databaseInfoProviderFactory.get(db.type, this.projectConfig);  
+      envs.push(...databaseGenerator.getEnvVariables(db.id));
+      secrets.push(...databaseGenerator.getSecrets(db.id));
     }
 
-    const eventBuses = [this.projectConfig.eventBus].filter(({ serviceIds }) => serviceIds.includes(serviceConfig.id) );
+    const eventBuses = this.projectConfig.eventBuses.filter(({ id }) => serviceConfig.eventBusIds.includes(id) );
     
     for (const eventBus of eventBuses) {
-      const eventBusGenerator = new EventBusGeneratorFactory().getEventBusGenerator(eventBus.type);  
-      envs.push(...eventBusGenerator.getEnvVariables(eventBus));
+      const eventBusGenerator = eventBusInfoProviderFactory.get(eventBus.type, this.projectConfig);  
+      envs.push(...eventBusGenerator.getEnvVariables(eventBus.id));
     }
 
     const secretStrs = removeExtraWhiteSpace(secrets

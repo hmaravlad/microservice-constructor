@@ -1,4 +1,4 @@
-import { Endpoint } from '../../types/service-config';
+import { Endpoint } from '../../types/config/api-config';
 
 export function getParams(endpoint: Endpoint): string[] {
   return endpoint.path

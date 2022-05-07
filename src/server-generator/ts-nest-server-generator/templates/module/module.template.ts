@@ -1,7 +1,8 @@
 import { Capitalize } from '../../../../utils/case-utils';
 import { File } from '../../../../types/file';
 import { FileTemplate } from '../../../../types/file-template';
-import { EndpointGroup, ServiceConfig } from '../../../../types/service-config';
+import { EndpointGroup } from '../../../../types/config/api-config';
+import { ServiceConfig } from '../../../../types/config/service-config';
 
 export class ModuleTemplate implements FileTemplate<EndpointGroup> {
   constructor(

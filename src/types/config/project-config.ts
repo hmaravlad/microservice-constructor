@@ -3,15 +3,18 @@ import { EventBus } from './event-bus';
 import { Gateway } from './gateway';
 import { ServiceConfig } from './service-config';
 
-export interface ProjectConfig {
+export class ProjectConfig {
   name: string;
-  ci: {
-    provider: string;
-    deployTarget: string;
-  };
+
+  cicd: string;
+
   dockerUsername: string;
+
   gateways: Gateway[];
-  eventBus: EventBus;
+
+  eventBuses: EventBus[];
+
   services: ServiceConfig[];
+
   databases: Database[];
 }

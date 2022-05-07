@@ -1,21 +1,23 @@
-import { FilesGenerator } from '../types/files-generator';
-import { Database } from '../types/database';
+import { Database } from '../types/config/database';
 import { PostgresDatabaseGenerator } from './postgres-database-generator';
 import { SecretsCreator } from '../secret-creator';
 import { EnvVariableProvider, SecretProvider } from 'src/types/env-provider';
+import { GeneratorMapping } from 'src/types/generator-mapping';
+import { PostgresInfoProvider } from './postgres-database-generator/postgres-info-provider';
+import { ProjectConfig } from '../types/config/project-config';
+import { GeneratorFactory } from '../generator-factory';
+import { InfoProviderFactory } from '../info-provider-factory';
 
-export class DatabaseGeneratorFactory {
-  constructor(private secretsCreator: SecretsCreator) {}
+export const databaseGeneratorMapping: GeneratorMapping<Database, EnvVariableProvider & SecretProvider> = {
+  'postgres': {
+    getGenerator(secretsCreator: SecretsCreator, projectConfig: ProjectConfig) {
+      return new PostgresDatabaseGenerator(secretsCreator, projectConfig);
+    },
+    getInfoProvider(projectConfig: ProjectConfig) {
+      return new PostgresInfoProvider(projectConfig);
+    },
+  },
+};
 
-  databaseGenerators: { [key: string]: FilesGenerator<Database> & EnvVariableProvider<Database> & SecretProvider<Database> } = {
-    'postgres': new PostgresDatabaseGenerator(this.secretsCreator),
-  };  
-
-  getDatabaseGenerator(type: string): FilesGenerator<Database> & EnvVariableProvider<Database> & SecretProvider<Database>  {
-    const databaseGenerator = this.databaseGenerators[type];
-    if (!databaseGenerator) {
-      throw new Error(`Database ${type} is not supported`);
-    } 
-    return databaseGenerator;
-  }
-}
+export const databaseGeneratorFactory = new GeneratorFactory(databaseGeneratorMapping);
+export const databaseInfoProviderFactory = new InfoProviderFactory(databaseGeneratorMapping as GeneratorMapping<unknown, EnvVariableProvider & SecretProvider>);

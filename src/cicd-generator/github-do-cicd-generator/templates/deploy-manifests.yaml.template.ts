@@ -1,6 +1,6 @@
 import { File } from '../../../types/file';
 import { FileTemplate } from '../../../types/file-template';
-import { ProjectConfig } from '../../../types/project-config';
+import { ProjectConfig } from '../../../types/config/project-config';
 
 export class DeployManifestsYamlTemplate implements FileTemplate<ProjectConfig> {
   getFile(projectConfig: ProjectConfig): File{

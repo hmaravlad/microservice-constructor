@@ -1,7 +1,7 @@
 import { File } from '../../../types/file';
 import { FileTemplate } from '../../../types/file-template';
-import { ProjectConfig } from '../../../types/project-config';
-import { ServiceConfig } from '../../../types/service-config';
+import { ProjectConfig } from '../../../types/config/project-config';
+import { ServiceConfig } from '../../../types/config/service-config';
 
 export class DeployYamlTemplate implements FileTemplate<ServiceConfig> {
   constructor(private projectConfig: ProjectConfig) {}

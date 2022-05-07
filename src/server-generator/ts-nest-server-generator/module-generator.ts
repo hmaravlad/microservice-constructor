@@ -1,7 +1,8 @@
 import { File } from '../../types/file';
 import { FileTemplate } from '../../types/file-template';
 import { FilesGenerator } from '../../types/files-generator';
-import { EndpointGroup, ServiceConfig } from '../../types/service-config';
+import { EndpointGroup } from '../../types/config/api-config';
+import { ServiceConfig } from '../../types/config/service-config';
 import { ControllerTemplate } from './templates/module/controller.template';
 import { DtoTemplate } from './templates/module/dto.template';
 import { ModuleTemplate } from './templates/module/module.template';
