@@ -12,5 +12,4 @@ import { FileWriter } from './writer';
   const files = await generateProject(config);
   const writer = new FileWriter(args.target);
   await writer.writeFiles(files);
-  //console.dir({ config }, { depth: 3 });
 })();
