@@ -5,10 +5,7 @@ import { ServiceConfig } from './service-config';
 
 export interface ProjectConfig {
   name: string;
-  ci: {
-    provider: string;
-    deployTarget: string;
-  };
+  cicd: string;
   dockerUsername: string;
   gateways: Gateway[];
   eventBus: EventBus;
