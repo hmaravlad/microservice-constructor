@@ -1,5 +1,5 @@
 import { Capitalize } from '../../utils/case-utils';
-import { EndpointGroup, isEntityRef, Value } from '../../types/config/service-config';
+import { EndpointGroup, isEntityRef, Value } from '../../types/config/api-config';
 
 const typeMap: { [key: string]: string } = {
   'string': 'string',
