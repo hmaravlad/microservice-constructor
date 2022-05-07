@@ -6,6 +6,8 @@ export interface ServiceConfig {
   port: number;
   docs: boolean;
   replicas: number;
+  databaseIds: number[];
+  eventBusIds: number[];
   api?: APIConfig;
 }
 
@@ -16,7 +18,7 @@ export interface APIConfig {
 export interface EndpointGroup {
   name: string;
   prefix: string;
-  endpoints: Endpoint[]
+  endpoints: Endpoint[];
   entities: Entity[];
 }
 
