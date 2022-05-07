@@ -8,7 +8,7 @@ export interface ProjectConfig {
   cicd: string;
   dockerUsername: string;
   gateways: Gateway[];
-  eventBus: EventBus;
+  eventBuses: EventBus[];
   services: ServiceConfig[];
   databases: Database[];
 }
