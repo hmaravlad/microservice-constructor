@@ -1,5 +1,5 @@
 import prompt from 'prompt';
-import { CICDGeneratorFactory } from '../cicd-generator/cicd-generator-factory';
+import { cicdInfoProviderFactory } from '../cicd-generator/cicd-generator-factory';
 import { File } from '../types/file';
 import { FilesGenerator } from '../types/files-generator';
 import { ProjectConfig } from '../types/project-config';
@@ -30,7 +30,7 @@ export class SecretsCreator implements FilesGenerator<ProjectConfig> {
   }
 
   generateFiles(config: ProjectConfig): File[] {
-    const cicdGenerator = new CICDGeneratorFactory(this).getCICDGenerator(`${config.ci.provider}-${config.ci.deployTarget}`);
+    const cicdGenerator = cicdInfoProviderFactory.get(config.cicd, config);
     const secretCommands = cicdGenerator.getSetSecretsCommands(this.secrets);
     const file = new SecretsShTemplate().getFile(this.secrets);
     file.data += '\n\n\n' + secretCommands.join('\n');
