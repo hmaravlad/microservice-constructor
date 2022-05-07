@@ -8,15 +8,6 @@ import { SecretsCreator } from '../secret-creator';
 import { InfoProviderFactory } from '../info-provider-factory';
 import { GeneratorFactory } from '../generator-factory';
 
-// export function getEventBusGeneratorMapping(projectConfig: ProjectConfig): GeneratorMapping<EventBus, EnvVariableProvider> {
-//   return {
-//     'kafka': {
-//       generator: new KafkaEventBusGenerator(),
-//       infoProvider: new KafkaInfoProvider(projectConfig),
-//     },
-//   };
-// }
-
 export const eventBusGeneratorMapping: GeneratorMapping<EventBus, EnvVariableProvider> = {
   'kafka': {
     getGenerator(secretsCreator: SecretsCreator, projectConfig: ProjectConfig) {
