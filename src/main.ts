@@ -4,6 +4,7 @@ import { generateProject } from './project-generator';
 import { IArgs, argsConfig } from './types/command-line-args';
 import { ProjectConfig } from './types/config/project-config';
 import { FileWriter } from './writer';
+import 'reflect-metadata';
 
 (async () => {
   const args = parse<IArgs>(argsConfig);

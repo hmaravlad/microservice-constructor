@@ -8,7 +8,8 @@ export class FileWriter {
 
   async writeFile(file: File): Promise<void> {
     file = { ...file, data: removeExtraWhiteSpace(file.data) };
-    const path = __dirname + '/' + this.target + '/' + file.path;
+    //const path = __dirname + '/' + this.target + '/' + file.path;
+    const path = this.target + '/' + file.path;
     if (!existsSync(path)) {
       await fs.mkdir(path, { recursive: true });
     }

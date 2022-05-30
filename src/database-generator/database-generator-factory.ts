@@ -21,3 +21,4 @@ export const databaseGeneratorMapping: GeneratorMapping<Database, EnvVariablePro
 
 export const databaseGeneratorFactory = new GeneratorFactory(databaseGeneratorMapping);
 export const databaseInfoProviderFactory = new InfoProviderFactory(databaseGeneratorMapping as GeneratorMapping<unknown, EnvVariableProvider & SecretProvider>);
+export const availableDatabases = Object.keys(databaseGeneratorMapping);

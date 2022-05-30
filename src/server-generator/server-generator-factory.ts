@@ -21,3 +21,4 @@ export const serverGeneratorMapping: GeneratorMapping<ServiceConfig, TestCommand
 
 export const serverGeneratorFactory = new GeneratorFactory(serverGeneratorMapping);
 export const serverInfoProviderFactory = new InfoProviderFactory(serverGeneratorMapping as GeneratorMapping<unknown, TestCommandsProvider>);
+export const availableServiceSetups = Object.keys(serverGeneratorMapping);
