@@ -20,3 +20,4 @@ const cicdGeneratorMapping: GeneratorMapping<ProjectConfig, SetSecretsCommandsPr
 
 export const cicdGeneratorFactory = new GeneratorFactory(cicdGeneratorMapping);
 export const cicdInfoProviderFactory = new InfoProviderFactory(cicdGeneratorMapping as GeneratorMapping<unknown, SetSecretsCommandsProvider>);
+export const availableCICDSetups = Object.keys(cicdGeneratorMapping);

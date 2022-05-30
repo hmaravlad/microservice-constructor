@@ -21,3 +21,4 @@ export const eventBusGeneratorMapping: GeneratorMapping<EventBus, EnvVariablePro
 
 export const eventBusGeneratorFactory = new GeneratorFactory(eventBusGeneratorMapping);
 export const eventBusInfoProviderFactory = new InfoProviderFactory(eventBusGeneratorMapping as GeneratorMapping<unknown, EnvVariableProvider>);
+export const availableEventBuses = Object.keys(eventBusGeneratorMapping);
