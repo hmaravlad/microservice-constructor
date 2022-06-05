@@ -1,4 +1,5 @@
-VERSION=$(echo $1 | cut -c2-)
+#VERSION=$(echo $1 | cut -c2-)
+VERSION=$(echo "$1" | sed -E 's/.*\/v([0-9.]+)$/\1/g')
 npx pkg dist/main.js --out-path executables 
 PACKAGE_NAME=microservice-constructor_$VERSION
 mkdir -p $PACKAGE_NAME/usr/local/bin
