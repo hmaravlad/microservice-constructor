@@ -17,7 +17,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm i
       - run: chmod +x ./generate-artifacts.sh
-      - run: ./generate-artifacts.sh
+      - run: ./generate-artifacts.sh ${{ github.ref }}
         shell: bash
       - run: zip microservice-constructor-linux.zip microservice-constructor_*.deb
       - run: zip microservice-constructor-windows.zip microservice-constructor_*.exe
