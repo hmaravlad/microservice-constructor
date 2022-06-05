@@ -1,0 +1,53 @@
+on:
+  push:
+    tags:
+    - 'v*'
+
+name: Upload Release Assets
+
+jobs:
+  build:
+    name: Upload Release Assets
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 14
+          registry-url: https://registry.npmjs.org/
+      - run: npm i
+      - run: chmod +x ./generate-artifacts.sh
+      - run: ./generate-artifacts.sh
+        shell: bash
+      - run: zip microservice-constructor-linux.zip microservice-constructor_*.deb
+      - run: zip microservice-constructor-windows.zip microservice-constructor_*.exe
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      - name: Upload Linux Release
+        id: upload-linux-release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} 
+          asset_path: ./microservice-constructor-linux.zip
+          asset_name: microservice-constructor-linux.zip
+          asset_content_type: application/zip
+      - name: Upload Windows Release
+        id: upload-windows-release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} 
+          asset_path: ./microservice-constructor-windows.zip
+          asset_name: microservice-constructor-windows.zip
+          asset_content_type: application/zip
