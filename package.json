@@ -1,14 +1,16 @@
 {
   "name": "microservice-constructor",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "",
   "main": "main.ts",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "start": "node dist/main.js",
     "serve": "tsnd --respawn --no-notify --transpile-only src/main.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "test0": "rm -rf ./results/*; tsc; node dist/main.js --source='data/t0.json' --target='./results/project0'",
-    "test1": "rm -rf ./results/*; tsc; node dist/main.js --source='data/config.json' --target='./results/project0'"
+    "test0": "rm -rf ./results/*; tsc; node dist/main.js --source='examples/t0.json' --target='./results/project0'",
+    "test1": "rm -rf ./results/*; tsc; node dist/main.js --source='examples/config.json' --target='./results/project0'"
   },
   "repository": {
     "type": "git",
@@ -20,6 +22,7 @@
     "@types/prompt": "^1.1.2",
     "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.25.2",
+    "pkg": "^5.7.0",
     "prompt": "^1.3.0",
     "reflect-metadata": "^0.1.13",
     "ts-command-line-args": "^2.1.0",
