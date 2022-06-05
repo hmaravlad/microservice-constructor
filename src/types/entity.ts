@@ -2,7 +2,7 @@ export interface FieldData {
   name: string;
   type: string;
   isId?: boolean;
-  possibleValues?: string[] | number[];
+  possibleValues?: string[];
   references?: string[];
 }
 
