@@ -15,4 +15,4 @@ echo "Description: Microservice constructor"    >> $PACKAGE_NAME/DEBIAN/control
 
 dpkg-deb --build $PACKAGE_NAME
 
-mv executables/main-win.exe microservice-constructor.exe
+mv executables/main-win.exe microservice-constructor_$VERSION.exe
