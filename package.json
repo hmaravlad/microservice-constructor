@@ -8,6 +8,7 @@
   "scripts": {
     "start": "node dist/main.js",
     "serve": "tsnd --respawn --no-notify --transpile-only src/main.ts",
+    "build": "tsc --declaration",
     "test": "echo \"Error: no test specified\" && exit 1",
     "test0": "rm -rf ./results/*; tsc; node dist/main.js --source='examples/t0.json' --target='./results/project0'",
     "test1": "rm -rf ./results/*; tsc; node dist/main.js --source='examples/config.json' --target='./results/project0'"
