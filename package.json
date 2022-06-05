@@ -1,6 +1,6 @@
 {
   "name": "microservice-constructor",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "",
   "main": "main.ts",
   "module": "dist/index.js",
