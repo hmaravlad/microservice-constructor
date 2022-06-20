@@ -8,7 +8,7 @@ export class PostgresInfoProvider implements EnvVariableProvider, SecretProvider
   getSecrets(id: number): string[] {
     const db = this.projectConfig.databases.find(database => database.id === id);
     if (!db) throw new Error(`Invalid reference, database with id = ${id} is not found`);
-    return [`${db.name.toUpperCase()}_POSTGRES_PASSWORD`];
+    return [`${db.name.toUpperCase()}_PASSWORD`];
   }
 
   getEnvVariables(id: number): EnvVariable[] {

@@ -4,60 +4,61 @@ import { FileTemplate } from '../../../types/file-template';
 
 export class PostgresDeplTemplate implements FileTemplate<Database> {
   getFile(database: Database): File {
+    const name = database.name.toLowerCase();
     return {
-      name: `${database.name}-postgres-depl.yaml`,
+      name: `${name}-postgres-depl.yaml`,
       path: 'infra/',
       data: `
         apiVersion: v1
         kind: Deployment
         metadata:
-          name: ${database.name}-postgres-depl
+          name: ${name}-postgres-depl
           labels:
-            app: ${database.name}-postgres-depl
+            app: ${name}-postgres-depl
         spec:
           replicas: 1
           template:
             metadata:
               labels:
-                app: ${database.name}-postgres
+                app: ${name}-postgres
             spec:
               containers:
               - image: postgres:9.4
-                name: ${database.name}-postgres
+                name: ${name}-postgres
                 ports:
                 - containerPort: 5432
                 volumeMounts:
-                - name: ${database.name}-postgres-data
+                - name: ${name}-postgres-data
                   mountPath: /var/lib/postgresql
                 env:
                   - name: POSTGRES_DB
-                    value: '${database.name}'
+                    value: '${name}'
                   - name: POSTGRES_USER
-                    value: '${database.name}-admin'
+                    value: '${name}-admin'
                   - name: POSTGRES_PASSWORD
                     valueFrom:
                       secretKeyRef:
-                        name: ${database.name}-password-secret
-                        key: ${database.name.toUpperCase()}_POSTGRES_PASSWORD            
+                        name: ${name}-password-secret
+                        key: ${name.toUpperCase().replace(/-/g, '_')}_PASSWORD            
               volumes:
-              - name: ${database.name}-postgres-data
+              - name: ${name}-postgres-data
                 persistentVolumeClaim:
-                  claimName: ${database.name}-postgres-data-claim
+                  claimName: ${name}-postgres-data-claim
         ---
         apiVersion: v1
         kind: Service
         metadata:
-          name: ${database.name}-postgres-serv
+          name: ${name}-postgres-serv
           labels:
-            name: ${database.name}-postgres-serv
+            name: ${name}-postgres-serv
         spec:
           type : ClusterIP
           ports:
-            - name: ${database.name}-postgres
+            - name: ${name}-postgres
               port: 5432
               targetPort : 5432
           selector:
-            app: ${database.name}-postgres
+            app: ${name}-postgres
       `,
     };
   }
