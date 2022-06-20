@@ -23,7 +23,7 @@ export default class GithubDoCICDGenerator implements FilesGenerator<ProjectConf
       files.push(this.generateTestWorkflow(service));
       files.push(deployTemplate.getFile(service));
     }
-    files.push(deployManifestsTemplate.getFile(config));
+    files.push(deployManifestsTemplate.getFile(this.secretsCreator.secrets.map(s => s.name)));
     return files;
   }
 

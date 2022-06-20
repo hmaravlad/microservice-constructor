@@ -21,9 +21,12 @@ export class DeployYamlTemplate implements FileTemplate<ServiceConfig> {
         jobs:
           build:
             runs-on: ubuntu-latest
+            defaults:
+              run:
+                working-directory: ./auth      
             steps:
             - uses: actions/checkout@v2
-            - run: cd ${serviceConfig.name}
+            - run: docker build -t  ${this.projectConfig.dockerUsername}/${serviceConfig.name}
             - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
               env:
                 DOCKER_USERNAME: \${{ secrets.DOCKER_USERNAME }}
@@ -32,7 +35,7 @@ export class DeployYamlTemplate implements FileTemplate<ServiceConfig> {
             - uses: digitalocean/action-doctl@v2
               with:
                 token: \${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-            - run: doctl kubernetes cluster kubeconfig save ${this.projectConfig.name}
+            - run: doctl kubernetes cluster kubeconfig save {{ secrets.CLUSTER_ID }}
             - run: kubectl rollout restart deployment ${serviceConfig.name}-depl 
       `,
     };
