@@ -6,29 +6,29 @@ export class PostgresDeplTemplate implements FileTemplate<Database> {
   getFile(database: Database): File {
     const name = database.name.toLowerCase();
     return {
-      name: `${name}-postgres-depl.yaml`,
+      name: `${name}-depl.yaml`,
       path: 'infra/',
       data: `
         apiVersion: v1
         kind: Deployment
         metadata:
-          name: ${name}-postgres-depl
+          name: ${name}-depl
           labels:
-            app: ${name}-postgres-depl
+            app: ${name}-depl
         spec:
           replicas: 1
           template:
             metadata:
               labels:
-                app: ${name}-postgres
+                app: ${name}
             spec:
               containers:
               - image: postgres:9.4
-                name: ${name}-postgres
+                name: ${name}
                 ports:
                 - containerPort: 5432
                 volumeMounts:
-                - name: ${name}-postgres-data
+                - name: ${name}-data
                   mountPath: /var/lib/postgresql
                 env:
                   - name: POSTGRES_DB
@@ -41,24 +41,24 @@ export class PostgresDeplTemplate implements FileTemplate<Database> {
                         name: ${name}-password-secret
                         key: ${name.toUpperCase().replace(/-/g, '_')}_PASSWORD            
               volumes:
-              - name: ${name}-postgres-data
+              - name: ${name}-data
                 persistentVolumeClaim:
-                  claimName: ${name}-postgres-data-claim
+                  claimName: ${name}-data-claim
         ---
         apiVersion: v1
         kind: Service
         metadata:
-          name: ${name}-postgres-serv
+          name: ${name}-serv
           labels:
-            name: ${name}-postgres-serv
+            name: ${name}-serv
         spec:
           type : ClusterIP
           ports:
-            - name: ${name}-postgres
+            - name: ${name}
               port: 5432
               targetPort : 5432
           selector:
-            app: ${name}-postgres
+            app: ${name}
       `,
     };
   }

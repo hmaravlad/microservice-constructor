@@ -6,13 +6,13 @@ export class PostgresPasswordTemplate implements FileTemplate<Database> {
   getFile(database: Database): File {
     const upperCaseName = database.name.toUpperCase().replace(/-/g, '_');
     return {
-      name: `${database.name}-postgres-password.yaml`,
+      name: `${database.name}-password.yaml`,
       path: 'infra/',
       data: `
         apiVersion: v1
         kind: Secret
         metadata:
-          name: ${database.name}-postgres-password-secret
+          name: ${database.name}-password-secret
         type: Opaque
         data:
         ${upperCaseName}_PASSWORD: $${upperCaseName}_PASSWORD_BASE64

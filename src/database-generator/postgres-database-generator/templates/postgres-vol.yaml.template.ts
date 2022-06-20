@@ -5,16 +5,16 @@ import { FileTemplate } from '../../../types/file-template';
 export class PostgresVolTemplate implements FileTemplate<Database> {
   getFile(database: Database): File {
     return {
-      name: `${database.name}-postgres-vol.yaml`,
+      name: `${database.name}-vol.yaml`,
       path: 'infra/',
       data: `
         kind: PersistentVolume
         apiVersion: v1
         metadata:
-          name: ${database.name}-postgres-volume
+          name: ${database.name}-volume
           labels:
             type: local
-            app: ${database.name}-postgres
+            app: ${database.name}
         spec:
           storageClassName: manual
           capacity:
@@ -27,7 +27,7 @@ export class PostgresVolTemplate implements FileTemplate<Database> {
         apiVersion: v1
         kind: "PersistentVolumeClaim"
         metadata:
-          name: "${database.name}-postgres-data-claim"
+          name: "${database.name}-data-claim"
         spec:
           accessModes:
           - ReadWriteOnce
