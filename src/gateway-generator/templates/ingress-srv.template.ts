@@ -15,7 +15,7 @@ export class IngressSrvTemplate implements FileTemplate<Gateway> {
       name: `ingress-${gateway.id}-srv.yaml`,
       path: 'infra/',
       data: `
-        apiVersion: extensions/v1beta1
+        apiVersion: networking.k8s.io/v1
         kind: Ingress
         metadata:
           name: ingress-service
@@ -27,10 +27,13 @@ export class IngressSrvTemplate implements FileTemplate<Gateway> {
             - host: ${gateway.hostname}
               http:
                 paths: ${'\n' + removeEmptyLines(this.config.services.filter(service => gateway.serviceIds.includes(service.id)).flatMap(serviceConfig => serviceConfig.api?.endpointGroups.map(endpointGroup => `
-                  - path: /${endpointGroup.prefix}/?(.*)
+                  - path: /${endpointGroup.prefix}
+                    pathType: Prefix
                     backend:
-                      serviceName: ${serviceConfig.name}-srv
-                      servicePort: ${serviceConfig.port}    
+                      service:
+                        name: ${serviceConfig.name}-srv
+                        port: 
+                          number: ${serviceConfig.port}    
                 `)).reduce((prev, curr) => (prev || '') + (curr + ''), '') || '')}
       `,
     };

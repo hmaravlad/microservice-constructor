@@ -9,18 +9,20 @@ import { SecretsShTemplate } from './templates/secrets.sh.template';
 export class SecretsCreator implements FilesGenerator<ProjectConfig> {
   secrets: Secret[] = [];
 
-  addSecret(secret: string): void {
-    this.secrets.push({ name: secret, value: '' });
+  addSecret(secret: string, value = ''): void {
+    this.secrets.push({ name: secret, value });
   }
 
   async promptSecrets(): Promise<void> {
     prompt.start();
 
     for (const secret of this.secrets) {
-      secret.value = await this.promptSecret(secret.name);
+      if (secret.value === '') {
+        secret.value = await this.promptSecret(secret.name);
+      }
     }
   }
-  
+
   async promptSecret(secretName: string): Promise<string> {
     const str = (await prompt.get({ name: secretName, message: `Please enter ${secretName}` }))[secretName];
     if (typeof str === 'string') {

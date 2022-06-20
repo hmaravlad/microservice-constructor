@@ -1,6 +1,6 @@
 {
   "name": "microservice-constructor",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "",
   "main": "main.ts",
   "module": "dist/index.js",
@@ -11,7 +11,7 @@
     "build": "tsc --declaration",
     "test": "echo \"Error: no test specified\" && exit 1",
     "test0": "rm -rf ./results/*; tsc; node dist/main.js --source='examples/t0.json' --target='./results/project0'",
-    "test1": "rm -rf ./results/*; tsc; node dist/main.js --source='examples/config.json' --target='./results/project0'"
+    "test1": "rm -rf ./results/*; tsc; node dist/main.js --source='examples/t1.json' --target='./results/project1'"
   },
   "repository": {
     "type": "git",

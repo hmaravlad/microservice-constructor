@@ -24,9 +24,11 @@ export class TestsYamlTemplate implements FileTemplate<ServiceConfig> {
         jobs:
           test:
             runs-on: ubuntu-latest
+            defaults:
+              run:
+                working-directory: ./auth      
             steps:
             - uses: actions/checkout@v2
-            - run: cd ${serviceConfig.name}
             ${addIndentation(this.testCommands.map(command => `- run: ${command}`).join('\n'), '\t\t\t\t\t\t', true)}
     `,
     };

@@ -23,7 +23,7 @@ export default class GithubDoCICDGenerator implements FilesGenerator<ProjectConf
       files.push(this.generateTestWorkflow(service));
       files.push(deployTemplate.getFile(service));
     }
-    files.push(deployManifestsTemplate.getFile(config));
+    files.push(deployManifestsTemplate.getFile(this.secretsCreator.secrets.map(s => s.name)));
     return files;
   }
 
@@ -36,5 +36,9 @@ export default class GithubDoCICDGenerator implements FilesGenerator<ProjectConf
 
   addSecrets(): void {
     this.secretsCreator.addSecret('GH_TOKEN');
+    this.secretsCreator.addSecret('DOCKER_USERNAME');
+    this.secretsCreator.addSecret('DOCKER_PASSWORD');
+    this.secretsCreator.addSecret('DIGITALOCEAN_ACCESS_TOKEN');
+    this.secretsCreator.addSecret('CLUSTER_ID');
   }
 }

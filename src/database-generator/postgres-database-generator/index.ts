@@ -27,7 +27,8 @@ export class PostgresDatabaseGenerator implements FilesGenerator<Database> {
   }
 
   addSecrets(db: Database): void {
-    this.secretsCreator.addSecret(`${db.name.toUpperCase()}_POSTGRES_PASSWORD`);
-    this.secretsCreator.addSecret(`${db.name.toUpperCase()}_POSTGRES_PASSWORD_BASE64`);
+    const upperCaseName = db.name.toUpperCase().replace(/-/g, '_');
+    this.secretsCreator.addSecret(`${upperCaseName}_PASSWORD`);
+    this.secretsCreator.addSecret(`${upperCaseName}_PASSWORD_BASE64`, `$(echo $${upperCaseName}_PASSWORD | base64)`);
   }
 }

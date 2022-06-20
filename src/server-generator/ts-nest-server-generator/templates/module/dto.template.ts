@@ -19,7 +19,7 @@ export class DtoTemplate implements FileTemplate<Entity> {
 
   getFile(entity: Entity): File {
     return {
-      name: `${entity.name}.dto.ts`,
+      name: `${Decapitalize(entity.name)}.dto.ts`,
       path: `${this.serviceConfig.name}/src/${this.endpointGroup.name}/dto`,
       data: this.generateDto(entity),
     };
