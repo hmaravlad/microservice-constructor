@@ -15,7 +15,7 @@ export class IngressSrvTemplate implements FileTemplate<Gateway> {
       name: `ingress-${gateway.id}-srv.yaml`,
       path: 'infra/',
       data: `
-        apiVersion: extensions/v1beta1
+        apiVersion: networking.k8s.io/v1
         kind: Ingress
         metadata:
           name: ingress-service

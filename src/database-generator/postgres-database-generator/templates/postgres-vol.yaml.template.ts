@@ -29,12 +29,12 @@ export class PostgresVolTemplate implements FileTemplate<Database> {
         metadata:
           name: "${database.name}-data-claim"
         spec:
+        storageClassName: manual
           accessModes:
           - ReadWriteOnce
           resources:
             requests:
               storage: ${database.sizeGb}Gi
-              storageClassName: manual
       `,
     };
   }

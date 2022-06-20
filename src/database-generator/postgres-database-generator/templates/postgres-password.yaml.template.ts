@@ -15,7 +15,7 @@ export class PostgresPasswordTemplate implements FileTemplate<Database> {
           name: ${database.name}-password-secret
         type: Opaque
         data:
-        ${upperCaseName}_PASSWORD: $${upperCaseName}_PASSWORD_BASE64
+          ${upperCaseName}_PASSWORD: $${upperCaseName}_PASSWORD_BASE64
       `,
     };
   }
