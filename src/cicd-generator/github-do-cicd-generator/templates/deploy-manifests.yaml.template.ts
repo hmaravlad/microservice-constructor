@@ -22,6 +22,7 @@ export class DeployManifestsYamlTemplate implements FileTemplate<string[]> {
             - uses: actions/checkout@v2
             - run: |
               ${addIndentation(secrets.map(secret => `export ${secret}={{ secrets.${secret} }}`).join('\n'), '\t\t\t\t\t\t', true)}
+              perl -pi.back -e 's/\\$([A-Z0-9_]+)/$ENV{$1}/g' infra/*
             - uses: digitalocean/action-doctl@v2
               with:
                 token: \${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
