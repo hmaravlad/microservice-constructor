@@ -26,6 +26,8 @@ export class ControllerTemplate implements FileTemplate<EndpointGroup> {
   }
 
   private generateEndpoints(endpointGroup: EndpointGroup): string {
+    this.fixMethods(endpointGroup);
+
     const imports: string[] = [];
 
     const endpoints = endpointGroup.endpoints.map(endpoint => this.generateEndpoint(endpoint, endpointGroup, imports));
@@ -64,7 +66,7 @@ export class ControllerTemplate implements FileTemplate<EndpointGroup> {
       })
       ` : ''}
       ${endpoint.name}(${params.join(', ')}): ${responseType || 'void'} {
-        // TODO: add business logic
+        throw new NotImplementedException();
       }`));
   }
 
@@ -76,7 +78,7 @@ export class ControllerTemplate implements FileTemplate<EndpointGroup> {
   }
 
   private generateNestjsImports(endpointGroup: EndpointGroup): string {
-    const imports = ['Controller'];
+    const imports = ['Controller', 'NotImplementedException'];
     for (const endpoint of endpointGroup.endpoints) {
       imports.push(endpoint.method);
       if (endpoint.path.includes(':')) imports.push('Param');
@@ -91,6 +93,12 @@ export class ControllerTemplate implements FileTemplate<EndpointGroup> {
       return "'" + type + "'";
     }
     return type;
+  }
+
+  private fixMethods(endpointGroup: EndpointGroup): void {
+    for (const endpoint of endpointGroup.endpoints) {
+      endpoint.method = Capitalize(endpoint.method.toLowerCase());
+    }
   }
 }
 
