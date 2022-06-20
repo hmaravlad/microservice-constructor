@@ -1,6 +1,6 @@
 import { File } from '../../../types/file';
 import { FileTemplate } from '../../../types/file-template';
-import { addIndentation } from 'src/utils/add-indentation';
+import { addIndentation } from '../../../utils/add-indentation';
 
 export class DeployManifestsYamlTemplate implements FileTemplate<string[]> {
   getFile(secrets: string[]): File{
