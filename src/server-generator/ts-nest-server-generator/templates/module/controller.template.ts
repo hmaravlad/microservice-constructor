@@ -59,7 +59,7 @@ export class ControllerTemplate implements FileTemplate<EndpointGroup> {
       ${this.serviceConfig.docs && (statusCode || responseType) ? `
       @ApiResponse({ 
         ${statusCode ? `status: ${statusCode},` : ''}
-        ${responseType ? `type: ${getNonArrayType(responseType)},` : ''}
+        ${responseType ? `type: ${this.fixPrimitiveTypeName(getNonArrayType(responseType))},` : ''}
         ${isArray(responseType || '') ? 'isArray: true,' : ''}
       })
       ` : ''}
@@ -84,6 +84,13 @@ export class ControllerTemplate implements FileTemplate<EndpointGroup> {
       if (endpoint.response?.statusCode) imports.push('HttpCode');
     }
     return `import { ${getDistinct(imports).join(', ')} } from '@nestjs/common';`;
+  }
+
+  private fixPrimitiveTypeName(type: string): string {
+    if (type === 'string' || type === 'boolean' || type === 'number') {
+      return "'" + type + "'";
+    }
+    return type;
   }
 }
 
