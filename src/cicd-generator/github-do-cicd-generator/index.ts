@@ -36,5 +36,9 @@ export default class GithubDoCICDGenerator implements FilesGenerator<ProjectConf
 
   addSecrets(): void {
     this.secretsCreator.addSecret('GH_TOKEN');
+    this.secretsCreator.addSecret('DOCKER_USERNAME');
+    this.secretsCreator.addSecret('DOCKER_PASSWORD');
+    this.secretsCreator.addSecret('DIGITALOCEAN_ACCESS_TOKEN');
+    this.secretsCreator.addSecret('CLUSTER_ID');
   }
 }
