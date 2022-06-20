@@ -7,7 +7,7 @@ export class TsNestInfoProvider implements TestCommandsProvider {
   getTestCommands(): string[] {
     return [
       'npm install',
-      'npm run test',
+      'npm run test -- --passWithNoTests',
     ];
   }
 }
