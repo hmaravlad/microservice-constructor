@@ -8,15 +8,15 @@ export class DockerfileTemplate implements FileTemplate<ServiceConfig> {
       name: 'Dockerfile',
       path: `${config.name}`,
       data: `      
-        FROM node:alpine
+        FROM node:14-alpine
 
         WORKDIR /app
         COPY package.json .
-        RUN npm install --only=prod
+        RUN npm install
         COPY . .
-
-        CMD ["npm", "start"]
-      `,
+        RUN npm run build
+        CMD ["npm", "run", "start:prod"]
+        `,
     };
   }
 }

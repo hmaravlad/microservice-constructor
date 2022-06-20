@@ -7,7 +7,10 @@ export class DockerignoreTemplate implements FileTemplate<ServiceConfig> {
     return { 
       name: '.dockerignore',
       path: `${config.name}`,
-      data: 'node_modules',
+      data: `
+        node_modules
+        dist
+      `,
     };
   }
 }
