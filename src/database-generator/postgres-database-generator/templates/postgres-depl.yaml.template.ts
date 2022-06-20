@@ -17,6 +17,9 @@ export class PostgresDeplTemplate implements FileTemplate<Database> {
             app: ${name}-depl
         spec:
           replicas: 1
+          selector:
+            matchLabels:
+              app: ${name}      
           template:
             metadata:
               labels:
