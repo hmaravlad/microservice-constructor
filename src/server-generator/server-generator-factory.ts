@@ -7,6 +7,8 @@ import { SecretsCreator } from '../secret-creator';
 import { ProjectConfig } from '../types/config/project-config';
 import { GeneratorFactory } from '../generator-factory';
 import { InfoProviderFactory } from '../info-provider-factory';
+import TsKoaServerGenerator from './js-koa-server-generator';
+import { TsKoaInfoProvider } from './js-koa-server-generator/ts-koa-info-provider';
 
 export const serverGeneratorMapping: GeneratorMapping<ServiceConfig, TestCommandsProvider> = {
   'ts-nest': {
@@ -15,6 +17,14 @@ export const serverGeneratorMapping: GeneratorMapping<ServiceConfig, TestCommand
     },
     getInfoProvider(projectConfig: ProjectConfig) {
       return new TsNestInfoProvider(projectConfig);
+    },
+  },
+  'ts-koa': {
+    getGenerator(secretsCreator: SecretsCreator, projectConfig: ProjectConfig) {
+      return new TsKoaServerGenerator(secretsCreator, projectConfig);
+    },
+    getInfoProvider(projectConfig: ProjectConfig) {
+      return new TsKoaInfoProvider(projectConfig);
     },
   },
 };
