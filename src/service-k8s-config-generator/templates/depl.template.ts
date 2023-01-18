@@ -8,6 +8,7 @@ import { FileTemplate } from '../../types/file-template';
 import { ProjectConfig } from '../../types/config/project-config';
 import { ServiceConfig } from '../../types/config/service-config';
 import { eventBusInfoProviderFactory } from '../../event-bus-generator/event-bus-generator-factory';
+import { prepareIndentation, resolveIndentation } from '../../utils/handle-indentation';
 
 export class DeplTemplate implements FileTemplate<ServiceConfig> {
   constructor(private projectConfig: ProjectConfig) {}
@@ -57,7 +58,7 @@ export class DeplTemplate implements FileTemplate<ServiceConfig> {
     return {
       name: `${serviceConfig.name}-depl.yaml`,
       path: 'infra/',
-      data: removeEmptyLines(`
+      data: removeEmptyLines(resolveIndentation(`
         apiVersion: apps/v1
         kind: Deployment
         metadata:
@@ -75,7 +76,7 @@ export class DeplTemplate implements FileTemplate<ServiceConfig> {
               containers:
                 - name: ${serviceConfig.name}
                   image: ${this.projectConfig.dockerUsername}/${serviceConfig.name}
-                  ${addIndentation(this.generateEnv(serviceConfig), '\t\t\t\t\t\t\t\t\t', true)}
+                  ${prepareIndentation(this.generateEnv(serviceConfig))}
         ---
         apiVersion: v1
         kind: Service
@@ -89,7 +90,7 @@ export class DeplTemplate implements FileTemplate<ServiceConfig> {
               protocol: TCP
               port: ${serviceConfig.port}
               targetPort: ${serviceConfig.port}
-      `),
+      `)),
     };
   }
 }

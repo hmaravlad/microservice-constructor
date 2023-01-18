@@ -1,15 +1,15 @@
-import { addIndentation } from '../../../../utils/add-indentation';
 import { Capitalize } from '../../../../utils/case-utils';
 import { File } from '../../../../types/file';
 import { FileTemplate } from '../../../../types/file-template';
 import { ServiceConfig } from '../../../../types/config/service-config';
+import { prepareIndentation, resolveIndentation } from '../../../../utils/handle-indentation';
 
 export class AppModuleTsTemplate implements FileTemplate<ServiceConfig> {
   getFile(config: ServiceConfig): File {
     return { 
       name: 'app.module.ts',
       path: `${config.name}/src`,
-      data: `
+      data: resolveIndentation(`
         import { Module } from '@nestjs/common';
         import { AppController } from './app.controller';
         ${this.generateModuleImports(config)}
@@ -20,7 +20,7 @@ export class AppModuleTsTemplate implements FileTemplate<ServiceConfig> {
           providers: [],
         })
         export class AppModule {}      
-      `,
+      `),
     };
   }
 
@@ -31,6 +31,6 @@ export class AppModuleTsTemplate implements FileTemplate<ServiceConfig> {
       .map(({ name }) => `import { ${Capitalize(name)}Module } from './${name}/${name}.module';` )
       .join('\n');
 
-    return addIndentation(imports, '\t\t\t\t', true);
+    return prepareIndentation(imports);
   }
 }
