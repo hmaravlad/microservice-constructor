@@ -1,13 +1,14 @@
-import { Capitalize } from '../../utils/case-utils';
+import { Capitalize } from '../case-utils';
 import { EndpointGroup, isEntityRef, Value } from '../../types/config/api-config';
+import { getTypeName } from './get-type-name';
 
 const typeMap: { [key: string]: string } = {
-  'string': 'string',
-  'number': 'number',
-  'boolean': 'boolean',
+  'string': 'Joi.string()',
+  'number': 'Joi.number()',
+  'boolean': 'Joi.boolean()',
 };
 
-export function getTypeName(value: Value, endpointGroup: EndpointGroup): string {
+export function getJoiType(value: Value, endpointGroup: EndpointGroup): string {
   const { type } = value;
 
   if (isEntityRef(type)) {
@@ -28,5 +29,5 @@ export function getTypeName(value: Value, endpointGroup: EndpointGroup): string 
     throw new Error('Type of value is array, but type of item is not specified');
   }
 
-  return getTypeName(itemType, endpointGroup) + '[]';
+  return `Joi.array().items(${getTypeName(itemType, endpointGroup)})`;
 }

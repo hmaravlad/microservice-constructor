@@ -3,13 +3,13 @@ import { File } from '../../../../types/file';
 import { FileTemplate } from '../../../../types/file-template';
 import { EndpointGroup, Entity, Field, Value } from '../../../../types/config/api-config';
 import { ServiceConfig } from '../../../../types/config/service-config';
-import { getTypeName } from '../../get-type-name';
 import { Capitalize, Decapitalize } from '../../../../utils/case-utils';
 import { getDistinct } from '../../../../utils/distinct';
 import { removeEmptyLines } from '../../../../utils/remove-empty-lines';
 import { isArray } from '../../../../utils/is-array';
 import { getNonArrayType } from '../../../../utils/get-array-item-type';
 import { prepareIndentation, resolveIndentation } from '../../../../utils/handle-indentation';
+import { getTypeName } from '../../../../utils/ts/get-type-name';
 
 export class DtoTemplate implements FileTemplate<Entity> {
   constructor(

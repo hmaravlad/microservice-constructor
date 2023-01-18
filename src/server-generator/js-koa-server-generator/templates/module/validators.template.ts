@@ -5,8 +5,8 @@ import { Endpoint, EndpointGroup, Entity, Field, Value } from '../../../../types
 import { ServiceConfig } from '../../../../types/config/service-config';
 import { Capitalize } from '../../../../utils/case-utils';
 import { removeEmptyLines } from '../../../../utils/remove-empty-lines';
-import { getParams } from '../../path-parsing';
-import { getJoiType } from '../../get-joi-type';
+import { getParams } from '../../../../utils/ts/path-parsing';
+import { getJoiType } from '../../../../utils/ts/get-joi-type';
 import { prepareIndentation, resolveIndentation } from '../../../../utils/handle-indentation';
 
 export class ValidatorsTemplate implements FileTemplate<EndpointGroup> {

@@ -3,8 +3,8 @@ import { File } from '../../../../types/file';
 import { FileTemplate } from '../../../../types/file-template';
 import { Endpoint, EndpointGroup } from '../../../../types/config/api-config';
 import { ServiceConfig } from '../../../../types/config/service-config';
-import { getTypeName } from '../../get-type-name';
-import { getParams } from '../../path-parsing';
+import { getTypeName } from '../../../../utils/ts/get-type-name';
+import { getParams } from '../../../../utils/ts/path-parsing';
 import { removeExtraWhiteSpace } from '../../../../utils/remove-extra-white-space';
 import { prepareIndentation, resolveIndentation } from '../../../../utils/handle-indentation';
 
