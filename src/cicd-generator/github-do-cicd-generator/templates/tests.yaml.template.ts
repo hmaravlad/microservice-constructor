@@ -1,7 +1,7 @@
 import { File } from '../../../types/file';
 import { FileTemplate } from '../../../types/file-template';
 import { ServiceConfig } from '../../../types/config/service-config';
-import { addIndentation } from '../../../utils/add-indentation';
+import { prepareIndentation, resolveIndentation } from '../../../utils/handle-indentation';
 
 export class TestsYamlTemplate implements FileTemplate<ServiceConfig> {
   constructor(private testCommands: string[]) {}
@@ -10,7 +10,7 @@ export class TestsYamlTemplate implements FileTemplate<ServiceConfig> {
     return {
       name: `test-${serviceConfig.name}.yaml`,
       path: '.github/workflows',
-      data: `
+      data: resolveIndentation(`
         name: ${serviceConfig.name}
 
         on:
@@ -29,8 +29,8 @@ export class TestsYamlTemplate implements FileTemplate<ServiceConfig> {
                 working-directory: ./auth      
             steps:
             - uses: actions/checkout@v2
-            ${addIndentation(this.testCommands.map(command => `- run: ${command}`).join('\n'), '\t\t\t\t\t\t', true)}
-    `,
+            ${prepareIndentation(this.testCommands.map(command => `- run: ${command}`).join('\n'))}
+    `),
     };
   }
 }
